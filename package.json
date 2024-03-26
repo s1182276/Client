@@ -1,0 +1,13 @@
+{
+    "name": "keuzewijzer",
+    "version": "1.0.0",
+    "scripts": {
+      "test": "jasmine"
+    },
+    "main": "index.html",
+    "dependencies": {
+        "gulp": "^4.0.2",
+        "gulp-jasmine": "^4.0.0",
+        "jasmine": "^3.99.0"
+    }
+  }
