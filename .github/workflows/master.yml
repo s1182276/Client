@@ -25,7 +25,9 @@ jobs:
         docker compose build
         docker compose -f docker-compose.yml -p ${{ vars.ENV_KEY }}-client up -d --remove-orphans
       env:
-        ENV_KEY: '${{ vars.ENV_KEY }}'   
+        ENV_KEY: '${{ vars.ENV_KEY }}'           
+        ENV_PORT: '${{ vars.ENV_PORT }}'   
+        ENV_PORT_SSL: '${{ vars.ENV_PORT_SSL }}'   
       working-directory: ${{ github.workspace }}
         
   deploy_prod:
@@ -47,5 +49,7 @@ jobs:
           docker compose build
           docker compose -f docker-compose.yml -p ${{ vars.ENV_KEY }}-client up -d --remove-orphans
         env:
-            ENV_KEY: '${{ vars.ENV_KEY }}'
+          ENV_KEY: '${{ vars.ENV_KEY }}'           
+          ENV_PORT: '${{ vars.ENV_PORT }}'   
+          ENV_PORT_SSL: '${{ vars.ENV_PORT_SSL }}'  
         working-directory: ${{ github.workspace }}
