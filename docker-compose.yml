@@ -1,9 +1,16 @@
-version: '3.9'
 services:
-  keuzewijzer-nginx:
-    container_name: "keuzewijzer-nginx"
+  client:
+    image: keuzewijzer-client:${ENV_KEY}
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - 80:80
+      - 443:443
+    networks:
+      - container_network
+
+networks:
+  container_network:
+    name: ${ENV_KEY}_network
+    external: true
