@@ -1,0 +1,51 @@
+name: DTAP Deployment
+on:
+  push:
+    branches:
+      - master
+      - initial-create # temp for testing action
+
+jobs:
+  deploy_dev:
+    name: DEV
+    if: github.ref == 'refs/heads/initial-create'
+    environment: 
+      name: DEV   
+    runs-on: self-hosted
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Prune old images
+      run: docker image prune -a -f
+      working-directory: ${{ github.workspace }}
+
+    - name: Build and start container for Development
+      run: |
+        docker compose build
+        docker compose -f docker-compose.yml -p ${{ vars.ENV_KEY }} up -d --remove-orphans
+      env:
+        ENV_KEY: '${{ vars.ENV_KEY }}'   
+      working-directory: ${{ github.workspace }}
+        
+  deploy_prod:
+    name: PRD
+    if: github.ref == 'refs/heads/master'
+    environment: 
+      name: PRD        
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Prune old images
+        run: docker image prune -a -f
+        working-directory: ${{ github.workspace }}
+
+      - name: Build and start container for Production
+        run: |
+          docker compose build
+          docker compose -f docker-compose.yml -p ${{ vars.ENV_KEY }} up -d --remove-orphans
+        env:
+            ENV_KEY: '${{ vars.ENV_KEY }}'
+        working-directory: ${{ github.workspace }}
