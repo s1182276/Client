@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - initial-create # temp for testing action
+      - initial-create 
 
 jobs:
   deploy_dev:
