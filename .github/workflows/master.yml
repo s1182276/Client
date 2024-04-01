@@ -3,12 +3,13 @@ on:
   push:
     branches:
       - master
-      - initial-create 
+      - staging
+      - development
 
 jobs:
   deploy_dev:
     name: DEV
-    if: github.ref == 'refs/heads/initial-create'
+    if: github.ref == 'refs/heads/development'
     environment: 
       name: DEV   
     runs-on: self-hosted
@@ -29,6 +30,54 @@ jobs:
         ENV_PORT: '${{ vars.ENV_PORT }}'   
         ENV_PORT_SSL: '${{ vars.ENV_PORT_SSL }}'   
       working-directory: ${{ github.workspace }}
+
+  deploy_tst:
+    name: TST
+    if: github.ref == 'refs/heads/staging'
+    environment: 
+      name: TST   
+    runs-on: self-hosted
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Prune old images
+      run: docker image prune -a -f
+      working-directory: ${{ github.workspace }}
+
+    - name: Build and start container for Development
+      run: |
+        docker compose build
+        docker compose -f docker-compose.yml -p ${{ vars.ENV_KEY }}-client up -d --remove-orphans
+      env:
+        ENV_KEY: '${{ vars.ENV_KEY }}'           
+        ENV_PORT: '${{ vars.ENV_PORT }}'   
+        ENV_PORT_SSL: '${{ vars.ENV_PORT_SSL }}'   
+      working-directory: ${{ github.workspace }}
+
+  deploy_acc:
+    name: ACC
+    if: github.ref == 'refs/heads/staging'
+    environment: 
+      name: ACC   
+    runs-on: self-hosted
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Prune old images
+      run: docker image prune -a -f
+      working-directory: ${{ github.workspace }}
+
+    - name: Build and start container for Development
+      run: |
+        docker compose build
+        docker compose -f docker-compose.yml -p ${{ vars.ENV_KEY }}-client up -d --remove-orphans
+      env:
+        ENV_KEY: '${{ vars.ENV_KEY }}'           
+        ENV_PORT: '${{ vars.ENV_PORT }}'   
+        ENV_PORT_SSL: '${{ vars.ENV_PORT_SSL }}'   
+      working-directory: ${{ github.workspace }}      
         
   deploy_prod:
     name: PRD
