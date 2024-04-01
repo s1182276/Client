@@ -1,0 +1,18 @@
+services:
+  client:
+    image: keuzewijzer-client:developments
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8081:80
+    volumes:
+      - ./src:/usr/share/nginx/html
+      - ./lib:/usr/share/nginx/html/lib
+    networks:
+      - container_network
+
+networks:
+  container_network:
+    name: developments_network
+    driver: bridge
