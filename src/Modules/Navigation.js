@@ -2,17 +2,25 @@ import ViewEngine from "./ViewEngine.js";
 
 (() => {
 
+    currentPage: '2';
+
     init: () => {
         console.log('Navigation intializing')
 
         ViewEngine.init(this.currentPage)
 
         console.log('Navigation initialized')
-    },
-        navigateTo: (page) => {
+    };
 
+    navigateTo: (page) => {
+
+    };
+
+    return {
+        init:init,
+        navigateTo:navigateTo,
+        getCurrentPage: () => this.currentPage
     }
-
     // const navigateTo = page => {
     //     this.currentPage = page
     //     console.log(`Navigating to ${page}`)
@@ -25,11 +33,6 @@ import ViewEngine from "./ViewEngine.js";
     // const getCurrentPage = () => {
     //     return this.currentPage
     // }
-
-    export default {
-        init: this.init
-    }
-
 })()
 
 
