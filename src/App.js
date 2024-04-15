@@ -1,14 +1,30 @@
-import Navigation from "./Modules/Navigation.js";
-import {APP_ENV, APP_NAME} from "./app.config.js";
+import * as Navigation from "./Modules/Navigation.js";
+import 'jquery';
+import {loadRoutes} from "./Modules/SessionManager";
 
-
+// Initialize the app
 (()=>{
 
-console.log(`Initializing App "${APP_NAME}", met environment: "${APP_ENV}"...`)
+// Navigation stuff
+    const navigator = Navigation;
 
-Navigation.init();
-Navigation.navigateTo('dashboard');
-console.log(`Current page:`, Navigation.getCurrentPage())
+    // 1. SessionManager initializen
+    let routes = loadRoutes()
+    // 1.1 NavigationRoute inladen indien aanwezig E.G { 'routeHistory': { 0: 'home', 1: 'modules' } }
+    navigator.init(routes)
+
+    // 2. NavigationManager initializen met loaded routeHistory
+    // 2.1 routes updaten in NavigationManager
+
+    // 3. ViewManager initializen met route
+    // 3.1 Renderen?
+
+
+
+    // NavigationManager.currentPage = 'home'
+    // Controller = Home
+    //      HomeController = index()
+    //             index() = ViewManager('home.index', [ 'param' => 'val' ])
 
 })()
 

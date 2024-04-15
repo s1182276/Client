@@ -5,7 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
         <!-- Stylesheets -->
-        <link href="./resources/css/tailwind.css" rel="stylesheet">
+        <link href="/dist/css/app.css" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
+
 
         <title>Client side</title>
 
@@ -14,7 +16,31 @@
 
         <div id="app"></div>
 
-        <script src="./src/App.js" type="module"></script>
-        <script src="./resources/lib/jquery-3.7.1.js"></script>
+
+        <table class="table-auto">
+            <thead>
+                <tr>
+                    <th>Leerroute</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Route 1</td>
+                </tr>
+                <tr>
+                    <td>Route 1</td>
+                </tr>
+                <tr>
+                    <td>Route 1</td>
+                </tr>
+            </tbody>
+        </table>
+        <!--       TODO Leerroute selecteren, modules ophalen die erbij;
+                        horen en toe kunnen voegen
+
+                        Leerroute toevoegen
+        -->
+
+        <script src="/dist/js/bundle.js" type="module"></script>
     </body>
 </html>

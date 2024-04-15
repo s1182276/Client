@@ -1,39 +1,19 @@
-import ViewEngine from "./ViewEngine.js";
+let currentPage = 'home';
+let routeHistory = {};
 
-(() => {
+// { 'routeHistory': { 0: 'home', 1: 'modules' }
 
-    currentPage: '2';
+const init = (routes = {}) => {
+    console.log('Navigation intializing')
 
-    init: () => {
-        console.log('Navigation intializing')
+    routeHistory = routes;
 
-        ViewEngine.init(this.currentPage)
-
-        console.log('Navigation initialized')
-    };
-
-    navigateTo: (page) => {
-
-    };
-
-    return {
-        init:init,
-        navigateTo:navigateTo,
-        getCurrentPage: () => this.currentPage
-    }
-    // const navigateTo = page => {
-    //     this.currentPage = page
-    //     console.log(`Navigating to ${page}`)
-    // }
-    //
-    // const goBack = () => {
-    //
-    // };
-    //
-    // const getCurrentPage = () => {
-    //     return this.currentPage
-    // }
-})()
+    console.log('Navigation initialized')
+};
 
 
-export default Navigation;
+const navigateTo = (page) => {
+    currentPage = page;
+};
+
+export { init, navigateTo };

@@ -1,14 +1,22 @@
-const SessionManager = {
+import {SESSION_NAME} from "../app.config";
 
-    currentToken: '',
-    refreshToken: '',
+let routes;
 
-    refresh() {
-
-    },
-    authenticate(username, password) {
-
+const loadRoutes = () => {
+    routes = localStorage.getItem(SESSION_NAME + "_routes")
+    if(routes === null) {
+        return [];
+    } else {
+        return JSON.parse(routes);
     }
 }
 
-export default SessionManager
+const storeRoutes = (newRoutes) => {
+    localStorage.setItem(SESSION_NAME + "_routes", JSON.stringify(newRoutes))
+}
+
+const authenticate = (username, password) => {
+    // Login api call
+}
+
+export { loadRoutes, authenticate }
