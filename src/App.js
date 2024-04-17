@@ -1,4 +1,8 @@
-// App constants
+// Voor css
+// npx tailwindcss -i ./src/Css/main.scss -o ./public/dist/css/app.css --watch
+
+// Voor App.js compilatie
+// npx webpack
 
 
 // Web components inladen
