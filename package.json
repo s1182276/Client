@@ -1,9 +1,10 @@
 {
     "name": "keuzewijzer",
     "version": "1.0.0",
+    "license": "MIT",
     "scripts": {
         "build": "npx tailwindcss -i ./src/Css/main.scss -o ./public/dist/css/app.css && webpack",
-        "dev": "npx tailwindcss -i ./src/Css/main.scss -o ./public/dist/css/app.css && webpack serve",
+        "dev": "npx tailwindcss -i ./src/Css/main.scss -o ./public/dist/css/app.css --watch && webpack serve",
         "test": "jasmine"
     },
     "main": "public/index.html",

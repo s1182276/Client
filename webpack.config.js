@@ -1,7 +1,4 @@
 const path = require('path');
-// const HtmlPlugin = require('html-webpack-plugin')
-// const CleanPlugin = require('clean-webpack-plugin')
-const MiniCssPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
     mode: 'development',
@@ -11,14 +8,16 @@ module.exports = {
         filename: 'js/bundle.js'
     },
     devServer: {
+        host: '0.0.0.0',
         liveReload: true,
         static: {
             directory: path.resolve(__dirname, 'public'),
         },
-        port: 3000,
+        port: 8030,
         open: true,
         hot: true,
         compress: true,
+        allowedHosts: "all",
         historyApiFallback: true,
     },
 };

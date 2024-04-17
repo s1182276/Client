@@ -1,30 +1,14 @@
-import * as Navigation from "./Modules/Navigation.js";
-import 'jquery';
-import {loadRoutes} from "./Modules/SessionManager";
-
-// Initialize the app
-(()=>{
-
-// Navigation stuff
-    const navigator = Navigation;
-
-    // 1. SessionManager initializen
-    let routes = loadRoutes()
-    // 1.1 NavigationRoute inladen indien aanwezig E.G { 'routeHistory': { 0: 'home', 1: 'modules' } }
-    navigator.init(routes)
-
-    // 2. NavigationManager initializen met loaded routeHistory
-    // 2.1 routes updaten in NavigationManager
-
-    // 3. ViewManager initializen met route
-    // 3.1 Renderen?
+// App constants
 
 
+// Web components inladen
+import "./Components/LoadingOverlay"
+import "./Components/Leerroute/Year"
 
-    // NavigationManager.currentPage = 'home'
-    // Controller = Home
-    //      HomeController = index()
-    //             index() = ViewManager('home.index', [ 'param' => 'val' ])
+// Navigation koppelen
+import * as Navigator from './Modules/NavigationManager'
+window.navigationManager = Navigator
+navigationManager.init('#route_select')
 
-})()
-
+import * as Api from './Modules/ApiModule'
+window.api = Api;

@@ -13,4 +13,4 @@ services:
 networks:
   container_network:
     name: ${ENV_KEY}_network
-    external: true
+    external: false
