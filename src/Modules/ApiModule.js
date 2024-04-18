@@ -1,3 +1,5 @@
+import {API_URL} from "../app.config";
+
 const retrieveLeerroutes = async () => {
 
     // 1. Load leerroutes   Mocked for now.
@@ -9,5 +11,35 @@ const retrieveLeerroutes = async () => {
     }
 }
 
+const retrieveModules = async () => {
+    try {
+        const modules = await getModules();
 
-export {retrieveLeerroutes}
+        let container = $('#blockContainer');
+
+        for (const module of modules) {
+
+            let block = $('<module-card>', {
+                class: 'module-block box-border flex flex-col p-2 mb-4 sm:w-full sm:mb-6 md:mb-12 md:w-2/5 lg:w-3/12 xl:w-2/12  px-4 mx-4',
+                moduleid: module.id,
+                name: module.name,
+                description: module.description,
+            });
+
+            container.append(block);
+        }
+    }
+    catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+const getModules = () => {
+    return $.ajax({
+        url: `${API_URL}/module`
+    });
+}
+
+
+export {retrieveLeerroutes, retrieveModules}
