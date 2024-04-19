@@ -26,6 +26,12 @@ class ModuleCard extends HTMLElement {
         this.shadowRoot.querySelector("#title").textContent = name;
         this.shadowRoot.querySelector("#description").textContent = shortDescription;
     }
+
+    listen(el) {
+        el.addEventListener('click', () => {
+
+        })
+    }
 }
 
 window.customElements.define('module-card', ModuleCard);

@@ -12,11 +12,11 @@
             <div class="w-full mx-2 p-6 bg-gray-200 rounded-lg m-3 md:w-2/5 md:space-x-2 lg:w-2/5">
                 <h5 class="text-xl font-bold mb-4">Jaar 1</h5>
 
-                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser">
+                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser" id="semester-chooser-1-1">
                     <b>Semester 1</b>
                     <p>Klik hier om een module te kiezen</p>
                 </div>
-                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser">
+                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser" id="semester-chooser-1-2">
                     <b>Semester 2</b>
                     <p>Klik hier om een module te kiezen</p>
                 </div>
@@ -26,11 +26,11 @@
             <div class="w-full mx-2 p-6 bg-gray-200 rounded-lg m-3 md:w-2/5 md:space-x-2 lg:w-2/5">
                 <h5 class="text-xl font-bold mb-4">Jaar 2</h5>
 
-                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser">
+                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser" id="semester-chooser-2-12">
                     <b>Semester 1</b>
                     <p>Klik hier om een module te kiezen</p>
                 </div>
-                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser">
+                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser" id="semester-chooser-2-2">
                     <b>Semester 2</b>
                     <p>Klik hier om een module te kiezen</p>
                 </div>
@@ -40,11 +40,11 @@
             <div class="w-full mx-2 p-6 bg-gray-200 rounded-lg m-3 md:w-2/5 md:space-x-2 lg:w-2/5">
                 <h5 class="text-xl font-bold mb-4">Jaar 3</h5>
 
-                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75">
+                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser" id="semester-chooser-3-1">
                     <b>Semester 1</b>
                     <p>Klik hier om een module te kiezen</p>
                 </div>
-                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75">
+                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser" id="semester-chooser-3-2">
                     <b>Semester 2</b>
                     <p>Klik hier om een module te kiezen</p>
                 </div>
@@ -54,11 +54,11 @@
             <div class="w-full mx-2 p-6 bg-gray-200 rounded-lg m-3 md:w-2/5 md:space-x-2 lg:w-2/5">
                 <h5 class="text-xl font-bold mb-4">Jaar 4</h5>
 
-                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75">
+                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser" id="semester-chooser-4-1">
                     <b>Semester 1</b>
                     <p>Klik hier om een module te kiezen</p>
                 </div>
-                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75">
+                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser" id="semester-chooser-4-2">
                     <b>Semester 2</b>
                     <p>Klik hier om een module te kiezen</p>
                 </div>
@@ -89,11 +89,14 @@
 
 <script>
     $(document).ready(() => {
-        $('.semester-chooser').on('click', () => {
+        $('.semester-chooser').on('click', function() {
+            const semesterChooser = $(this)[0];
+
             window.api.retrieveModules().then(() => {
-                $(".module-block[id]").on('click', (event) =>{
-                    let id = $(event.currentTarget).attr('id');
-                    console.log(id);
+                $("module-card").on('click', function() {
+                    addModuleToSemester($(this)[0], semesterChooser);
+                    $('#semesterModal').addClass('hidden');
+                    $("#blockContainer").empty()
                 });
 
                 $("#semesterModal").removeClass('hidden');
@@ -111,5 +114,12 @@
                 modal.addClass('hidden');
             }
         });
+
+        const addModuleToSemester = ($module, $semesterChooser) => {
+            console.log($module);
+            $($semesterChooser).empty();
+            $($module).removeClass(); //TODO Make this not needed, improve css
+            $semesterChooser.append($module);
+        }
     })
 </script>

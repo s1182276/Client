@@ -20,7 +20,7 @@ const retrieveModules = async () => {
         for (const module of modules) {
 
             let block = $('<module-card>', {
-                class: 'module-block box-border flex flex-col p-2 mb-4 sm:w-full sm:mb-6 md:mb-12 md:w-2/5 lg:w-3/12 xl:w-2/12  px-4 mx-4',
+                class: 'box-border flex flex-col p-2 mb-4 sm:w-full sm:mb-6 md:mb-12 md:w-2/5 lg:w-3/12  xl:w-2/12 bg-gray-100 rounded-lg shadow-md hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 px-4 mx-4',
                 moduleid: module.id,
                 name: module.name,
                 description: module.description,
