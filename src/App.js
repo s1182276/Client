@@ -4,10 +4,10 @@
 // Voor App.js compilatie
 // npx webpack
 
-
 // Web components inladen
 import "./Components/LoadingOverlay"
 import "./Components/Leerroute/Year"
+import "./Components/Module/ModuleCard"
 
 // Navigation koppelen
 import * as Navigator from './Modules/NavigationManager'

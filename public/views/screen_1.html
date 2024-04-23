@@ -12,11 +12,11 @@
             <div class="w-full mx-2 p-6 bg-gray-200 rounded-lg m-3 md:w-2/5 md:space-x-2 lg:w-2/5">
                 <h5 class="text-xl font-bold mb-4">Jaar 1</h5>
 
-                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser">
+                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser" id="semester-chooser-1-1">
                     <b>Semester 1</b>
                     <p>Klik hier om een module te kiezen</p>
                 </div>
-                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser">
+                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser" id="semester-chooser-1-2">
                     <b>Semester 2</b>
                     <p>Klik hier om een module te kiezen</p>
                 </div>
@@ -26,11 +26,11 @@
             <div class="w-full mx-2 p-6 bg-gray-200 rounded-lg m-3 md:w-2/5 md:space-x-2 lg:w-2/5">
                 <h5 class="text-xl font-bold mb-4">Jaar 2</h5>
 
-                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser">
+                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser" id="semester-chooser-2-12">
                     <b>Semester 1</b>
                     <p>Klik hier om een module te kiezen</p>
                 </div>
-                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser">
+                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser" id="semester-chooser-2-2">
                     <b>Semester 2</b>
                     <p>Klik hier om een module te kiezen</p>
                 </div>
@@ -40,11 +40,11 @@
             <div class="w-full mx-2 p-6 bg-gray-200 rounded-lg m-3 md:w-2/5 md:space-x-2 lg:w-2/5">
                 <h5 class="text-xl font-bold mb-4">Jaar 3</h5>
 
-                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75">
+                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser" id="semester-chooser-3-1">
                     <b>Semester 1</b>
                     <p>Klik hier om een module te kiezen</p>
                 </div>
-                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75">
+                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser" id="semester-chooser-3-2">
                     <b>Semester 2</b>
                     <p>Klik hier om een module te kiezen</p>
                 </div>
@@ -54,11 +54,11 @@
             <div class="w-full mx-2 p-6 bg-gray-200 rounded-lg m-3 md:w-2/5 md:space-x-2 lg:w-2/5">
                 <h5 class="text-xl font-bold mb-4">Jaar 4</h5>
 
-                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75">
+                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser" id="semester-chooser-4-1">
                     <b>Semester 1</b>
                     <p>Klik hier om een module te kiezen</p>
                 </div>
-                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75">
+                <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 semester-chooser" id="semester-chooser-4-2">
                     <b>Semester 2</b>
                     <p>Klik hier om een module te kiezen</p>
                 </div>
@@ -88,36 +88,38 @@
 </div>
 
 <script>
-    // Function to add dynamic blocks to the modal
-    function addBlocks(numBlocks) {
-        var $container = $('#blockContainer');
-        for (var i = 1; i <= numBlocks; i++) {
-            var $block = $('<div>', {
-                class: 'box-border flex flex-col p-2 mb-4 sm:w-full sm:mb-6 md:mb-12 md:w-2/5 lg:w-3/12  xl:w-2/12 bg-gray-100 rounded-lg shadow-md hover:cursor-pointer hover:bg-teal-100 transition-colors duration-75 px-4 mx-4',
-                html: '<b>Semester ' + i + '</b><p>Klik hier om een module te kiezen</p>'
+    $(document).ready(() => {
+        $('.semester-chooser').on('click', function() {
+            const semesterChooser = $(this)[0];
+
+            window.api.retrieveModules().then(() => {
+                $("module-card").on('click', function() {
+                    addModuleToSemester($(this)[0], semesterChooser);
+                    $('#semesterModal').addClass('hidden');
+                    $("#blockContainer").empty()
+                });
+
+                $("#semesterModal").removeClass('hidden');
             });
-            $container.append($block);
+        });
+
+        $('#closeModal').click(() => {
+            $('#semesterModal').addClass('hidden');
+            $("#blockContainer").empty()
+        });
+
+        $(document).mouseup((e) => {
+            let modal = $('#semesterModal');
+            if (!modal.is(e.target) && modal.has(e.target).length === 0) {
+                modal.addClass('hidden');
+            }
+        });
+
+        const addModuleToSemester = ($module, $semesterChooser) => {
+            console.log($module);
+            $($semesterChooser).empty();
+            $($module).removeClass(); //TODO Make this not needed, improve css
+            $semesterChooser.append($module);
         }
-    }
-
-    $('.semester-chooser').on('click', function() {
-        $("#semesterModal").removeClass('hidden');
-        addBlocks(15);
-    });
-
-    $('#closeModal').click(function() {
-        $('#semesterModal').addClass('hidden');
-        $("#blockContainer").empty()
-    });
-
-    $('#addBlock').click(function() {
-        addBlocks(1);
-    });
-
-    $(document).mouseup(function(e) {
-        let modal = $('#semesterModal');
-        if (!modal.is(e.target) && modal.has(e.target).length === 0) {
-            modal.addClass('hidden');
-        }
-    });
+    })
 </script>
