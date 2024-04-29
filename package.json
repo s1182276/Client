@@ -1,0 +1,31 @@
+{
+    "name": "keuzewijzer",
+    "version": "1.0.0",
+    "license": "MIT",
+    "scripts": {
+        "build": "npx tailwindcss -i ./src/Css/main.scss -o ./public/dist/css/app.css && webpack",
+        "dev": "concurrently \"npx tailwindcss -i ./src/Css/main.scss -o ./public/dist/css/app.css --watch\" \"webpack serve\"",
+        "test": "jasmine"
+    },
+    "main": "public/index.html",
+    "devDependencies": {
+        "autoprefixer": "^10.4.19",
+        "concurrently": "^8.2.2",
+        "css-loader": "^7.1.0",
+        "gulp": "^4.0.2",
+        "gulp-jasmine": "^4.0.0",
+        "jasmine": "^3.99.0",
+        "jquery": "^3.7.1",
+        "mini-css-extract-plugin": "^2.8.1",
+        "postcss": "^8.4.38",
+        "postcss-loader": "^8.1.1",
+        "postcss-preset-env": "^9.5.4",
+        "sass": "^1.74.1",
+        "sass-loader": "^14.1.1",
+        "style-loader": "^4.0.0",
+        "tailwindcss": "^3.4.3",
+        "webpack": "^5.91.0",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^5.0.4"
+    }
+}
