@@ -20,6 +20,6 @@ FROM nginx
 
 RUN rm /etc/nginx/conf.d/default.conf
 
-COPY ./nginx/conf /etc/nginx
+COPY ./nginx/conf/nginx.conf /etc/nginx/nginx.conf
 
 COPY --from=build /app/public /usr/share/nginx/html
