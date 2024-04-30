@@ -1,4 +1,5 @@
 const path = require('path');
+const dotEnv = require('dotenv-webpack');
 
 module.exports = {
     mode: 'development',
@@ -20,4 +21,9 @@ module.exports = {
         allowedHosts: "all",
         historyApiFallback: true,
     },
+    plugins: [
+        new dotEnv({
+            path: path.join(__dirname, '.client.env')
+        }),
+    ]
 };
