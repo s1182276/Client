@@ -4,6 +4,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        API_URL: ${API_URL}
+        ENV: ${ENV_KEY}
     ports:
       - ${ENV_PORT}:80
       - ${ENV_PORT_SSL}:443
@@ -13,4 +16,4 @@ services:
 networks:
   container_network:
     name: ${ENV_KEY}_network
-    external: false
+    external: true
