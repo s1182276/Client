@@ -16,3 +16,6 @@ navigationManager.init('#route_select')
 
 import * as Api from './Modules/ApiModule'
 window.api = Api;
+
+import * as Msal from './Modules/MsalModule'
+window.msal = Msal;
