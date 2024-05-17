@@ -9,17 +9,32 @@ const msalConfig = {
     },
 };
 
-const msalInstance = new PublicClientApplication(msalConfig);
-
 const loginRequest = {
-    scopes: ["user.read", "openid", "profile"],
+    scopes: ["user.read"],
 };
+
+const msalInstance = new PublicClientApplication(msalConfig);;
+
+const initialize = async () => {
+    await msalInstance.initialize();
+}
+
+const getActiveAccount = () => {
+    return msalInstance.getActiveAccount();
+}
+
+const trySso = async () => {
+    let authResult = await msalInstance.ssoSilent(loginRequest);
+    
+    return true;
+}
 
 const signIn = async () => {
     try {
-        await msalInstance.initialize();
-        const authResult = await msalInstance.loginPopup();
-        console.log("Authentication successful:", authResult);
+        let authResult = await msalInstance.loginPopup();
+
+        msalInstance.setActiveAccount(authResult.account);
+
         return authResult;
     } catch (error) {
         console.log("Authentication failed:", error);
@@ -27,8 +42,8 @@ const signIn = async () => {
     }
 }
 
-const signOut = () => {
-    msalInstance.logout();
+const signOut = async () => {
+    await msalInstance.logoutPopup();
     console.log("User logged out.");
 }
 
@@ -36,4 +51,4 @@ const acquireTokenSilent = async (tokenRequest) => {
     return await msalInstance.acquireTokenSilent(tokenRequest);
 }
 
-export { signIn, signOut, acquireTokenSilent }
+export { initialize, getActiveAccount, trySso, signIn, signOut, acquireTokenSilent }

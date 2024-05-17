@@ -12,51 +12,22 @@
         <link rel="manifest" href="manifest.json">
     </head>
     <body class="flex flex-col h-screen bg-gray-100">
+        <div id="menu-container">
+
+        </div>
+        
+        <div class="ml-4 mt-4">
+            <div class="flex items-center">
+                <label class="block text-sm font-medium text-gray-700 mr-2">
+                    Selecteer een leerroute
+                    <select id="route_select" class="block p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" disabled>
+                        <option value="">Bezig met laden...</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+
         <div class="mx-md-0 flex-grow h-screen">
-            <!-- Header -->
-            <header class="bg-zinc-800 p-4">
-                <div class="flex justify-between items-center">
-                    <h1 class="text-xl font-bold text-white">Deeltijd Keuzewijzer</h1>
-                    <button id="menuButton" class="text-white focus:outline-none">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
-                </div>
-            </header>
-
-            <div id="menu" class="fixed top-0 right-0 w-64 h-full bg-zinc-800 transform translate-x-full transition-transform duration-300 ease-in-out z-50">
-                <div class="flex justify-between items-center py-4 bg-zinc-800 text-white px-4">
-                    <div class="flex items-center justify-center"> <!-- Center button vertically and horizontally -->
-                        <button id="closeMenuButton" class="text-white focus:outline-none">
-                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </button>
-                        <div class="text-lg ml-2">Menu</div> <!-- Added ml-2 for spacing between button and text -->
-                    </div>
-                </div>
-                <ul>
-                    <li class="text-white py-2 px-4 hover:bg-gray-800 cursor-pointer">Mijn keuzes</li>
-                    <li class="text-white py-2 px-4 hover:bg-gray-800 cursor-pointer">Studieroute doorgeven</li>
-                    <li class="text-white py-2 px-4 hover:bg-gray-800 cursor-pointer">Mijn instellingen</li>
-                    <li class="text-white py-2 px-4 hover:bg-gray-800 cursor-pointer">Feedback</li>
-                    <li class="text-white py-2 px-4 hover:bg-gray-800 cursor-pointer">Disclaimer</li>
-                    <li id="loginButton" class="text-white py-2 px-4 hover:bg-gray-800 cursor-pointer">Inloggen</li>
-                </ul>
-            </div>
-
-            <div class="ml-4 mt-4">
-                <div class="flex items-center">
-                    <label class="block text-sm font-medium text-gray-700 mr-2">
-                        Selecteer een leerroute
-                        <select id="route_select" class="block p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" disabled>
-                            <option value="">Bezig met laden...</option>
-                        </select>
-                    </label>
-                </div>
-            </div>
-
             <!-- Main Content -->
             <main id="app" class="container w-full mx-auto py-8 flex flex-col justify-center items-center min-h-1/2 lg:w-10/12">
                 <loading-overlay></loading-overlay>
@@ -77,23 +48,6 @@
                 document.getElementById('closeMenuButton').addEventListener('click', function() {
                     menu.classList.add('translate-x-full');
                 });
-
-                document.getElementById('loginButton').addEventListener('click', function () {
-                    msal.signIn().then(() => {
-                        // Once signed in, you can acquire tokens to access resources
-                        const tokenRequest = {
-                            scopes: ["api://keuzewijzer/All"],
-                        };
-                        msal.acquireTokenSilent(tokenRequest)
-                            .then(response => {
-                                console.log("Access token acquired:", response.accessToken);
-                            })
-                            .catch(error => {
-                                console.log("Failed to acquire token:", error);
-                            });
-                    });
-                });
-
 
                 let loading = true
                 const simulateDelay = async ms => new Promise(resolve => setTimeout(resolve, ms))
