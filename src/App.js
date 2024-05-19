@@ -17,6 +17,19 @@ window.navigationManager.init('#route_select')
 import * as Api from './Modules/ApiModule'
 window.api = Api;
 
+import * as Msal from './Modules/MsalModule'
+window.msal = Msal;
+
 import * as Menu from './Modules/MenuModule'
 window.menu = Menu;
-window.menu.initialize('#menu-container');
+
+window.msal.init().then(() => {
+    $(document).ready(() => {
+        window.menu.init('#menu-container', window.msal);
+
+        window.msal.acquireTokenSilent().then((token) => {
+            console.log(`token ${token}`);
+        });
+    })
+})
+

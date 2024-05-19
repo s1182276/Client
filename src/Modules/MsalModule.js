@@ -15,40 +15,52 @@ const loginRequest = {
 
 const msalInstance = new PublicClientApplication(msalConfig);;
 
-const initialize = async () => {
+const init = async () => {
     await msalInstance.initialize();
+    await msalInstance.handleRedirectPromise();
+
+    const accounts = msalInstance.getAllAccounts();
+    if(accounts.length > 0) {
+        msalInstance.setActiveAccount(accounts[0]);
+    } else {
+        await trySso();
+    }
 }
 
 const getActiveAccount = () => {
     return msalInstance.getActiveAccount();
 }
 
-const trySso = async () => {
-    let authResult = await msalInstance.ssoSilent(loginRequest);
-    
-    return true;
-}
-
 const signIn = async () => {
     try {
         let authResult = await msalInstance.loginPopup();
-
         msalInstance.setActiveAccount(authResult.account);
-
-        return authResult;
     } catch (error) {
         console.log("Authentication failed:", error);
-        return null;
+        throw error;
     }
 }
 
 const signOut = async () => {
-    await msalInstance.logoutPopup();
-    console.log("User logged out.");
+    await msalInstance.logoutRedirect({
+        account: getActiveAccount(),
+        postLogoutRedirectUri: window.location
+    });
 }
 
-const acquireTokenSilent = async (tokenRequest) => {
-    return await msalInstance.acquireTokenSilent(tokenRequest);
+const acquireTokenSilent = async () => {
+    let tokenResult = await msalInstance.acquireTokenSilent(loginRequest);
+    return tokenResult.accessToken;
 }
 
-export { initialize, getActiveAccount, trySso, signIn, signOut, acquireTokenSilent }
+const trySso = async () => {
+    try {
+        let authResult = await msalInstance.ssoSilent(loginRequest);
+        msalInstance.setActiveAccount(authResult.account);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+export { init, getActiveAccount, signIn, signOut, acquireTokenSilent }

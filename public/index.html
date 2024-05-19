@@ -39,16 +39,6 @@
         <script src="dist/js/bundle.js" type="module"></script>
         <script defer>
             $(document).ready(() => {
-                const menu = document.getElementById('menu');
-
-                document.getElementById('menuButton').addEventListener('click', function() {
-                    menu.classList.toggle('translate-x-full');
-                });
-
-                document.getElementById('closeMenuButton').addEventListener('click', function() {
-                    menu.classList.add('translate-x-full');
-                });
-
                 let loading = true
                 const simulateDelay = async ms => new Promise(resolve => setTimeout(resolve, ms))
 
