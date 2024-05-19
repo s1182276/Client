@@ -42,4 +42,4 @@ const getModules = () => {
 }
 
 
-export {retrieveLeerroutes, retrieveModules}
+export { retrieveLeerroutes, retrieveModules }

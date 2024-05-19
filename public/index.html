@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
         <!-- Stylesheets -->
-<!--        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">-->
         <link href="dist/css/app.css" type="text/css" rel="stylesheet">
 
         <title>HBO-ICT Keuzewijzer Deeltijd</title>
@@ -13,24 +12,22 @@
         <link rel="manifest" href="manifest.json">
     </head>
     <body class="flex flex-col h-screen bg-gray-100">
-        <div class="mx-2 mx-md-0 flex-grow h-screen">
-            <!-- Header -->
-            <header class="bg-gray-100 py-4 flex justify-between items-center">
-                <div class="container mx-auto">
-                    <h1 class="text-3xl font-bold text-gray-900">HBO-ICT Keuzewijzer Deeltijd</h1>
-                </div>
-                <div class="ml-4">
-                    <div class="flex items-center">
-                        <label class="block text-sm font-medium text-gray-700 mr-2">
-                            Selecteer een leerroute
-                            <select id="route_select" class="block p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" disabled>
-                                <option value="">Bezig met laden...</option>
-                            </select>
-                        </label>
-                    </div>
-                </div>
-            </header>
+        <div id="menu-container">
 
+        </div>
+        
+        <div class="ml-4 mt-4">
+            <div class="flex items-center">
+                <label class="block text-sm font-medium text-gray-700 mr-2">
+                    Selecteer een leerroute
+                    <select id="route_select" class="block p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" disabled>
+                        <option value="">Bezig met laden...</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+
+        <div class="mx-md-0 flex-grow h-screen">
             <!-- Main Content -->
             <main id="app" class="container w-full mx-auto py-8 flex flex-col justify-center items-center min-h-1/2 lg:w-10/12">
                 <loading-overlay></loading-overlay>
