@@ -1,0 +1,19 @@
+name: Cypress Tests
+on:
+  push:
+    branches:
+      - master
+      - staging
+      - development
+
+jobs:
+  test:
+    runs-on: self-hosted
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Run Cypress docker container with local tests
+      run: |
+        docker pull cypress/included:13.9.0
+        docker run --name cypress-test -v $PWD/cypress/e2e:/e2e -w /e2e cypress/included:13.9.0
