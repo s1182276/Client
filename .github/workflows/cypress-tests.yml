@@ -1,8 +1,4 @@
-on:
-  workflow_run:
-    workflows: ["DTAP Deployment"]
-    types:
-      - completed
+on: workflow_dispatch
 
 jobs:
   RunE2E:
