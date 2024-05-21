@@ -1,13 +1,12 @@
 name: Cypress Tests
 on:
-  push:
-    branches:
-      - master
-      - staging
-      - development
+  workflow_run:
+    workflows: ["DTAP Deployment"] 
+    types:
+      - completed
 
 jobs:
-  test:
+  RunE2E:
     runs-on: self-hosted
     steps:
     - name: Checkout repository
@@ -15,5 +14,9 @@ jobs:
 
     - name: Run Cypress docker container with local tests
       run: |
+        pwd
+        ls
         docker pull cypress/included:13.9.0
-        docker run --name cypress-test -v $PWD/cypress/e2e:/e2e -w /e2e cypress/included:13.9.0
+        docker run --name cypress-test -v ./cypress/e2e:/e2e -w /e2e cypress/included:13.9.0
+      env:
+        CYPRESS_BASE_URL: '${{ vars.CYPRESS_BASE_URL }}'
