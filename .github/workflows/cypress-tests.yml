@@ -1,14 +1,13 @@
-#trig
-name: Cypress Tests
 on:
   workflow_run:
-    workflows: ["DTAP Deployment"] 
+    workflows: ["DTAP Deployment"]
     types:
       - completed
 
 jobs:
   RunE2E:
     runs-on: self-hosted
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
