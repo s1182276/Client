@@ -1,3 +1,4 @@
+#trig
 name: Cypress Tests
 on:
   workflow_run:
