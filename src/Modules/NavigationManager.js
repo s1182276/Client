@@ -1,44 +1,21 @@
-let navigationSelector;
-const HOME_PAGE = 'screen_1'
+import home from '../Views/Home';
+import myRoutes from '../Views/MyRoutes';
 
-const init = (selector) => {
-    navigationSelector = $(selector)
+const routes = {
+    "/": {title: "Home", render: home },
+    "/mijn-routes": {title: "Home", render: myRoutes },
 }
 
-const getSelector = () => {
-    return navigationSelector
-}
+const router = () => {
+    let view = routes[location.pathname];
 
-/**
- * Navigate to another screen
- * @param screenName screen name to navigate to
- */
-const to = (screenName = '') => {
-
-    // 1. Validate screen name parameter
-    if (screenName === '')
-        return
-
-    // 2. Set the new screen as current route
-    localStorage.setItem('route', screenName)
-
-    // 3. Remove old screen and replace
-    $('#app').empty().load(`views/${screenName}.html`)
-
-    // 4. Update Route selector
-    getSelector().val(screenName)
-}
-
-/**
- * Retrieve the current route
- * @returns {string}
- */
-const currentRoute = () => {
-    let storedRoute = localStorage.getItem('route')
-    if (storedRoute === null) {
-        storedRoute = HOME_PAGE
+    if (view) {
+        document.title = view.title;
+        app.innerHTML = view.render();
+    } else {
+        history.replaceState("", "", "/");
+        router();
     }
-    return storedRoute
 }
 
-export {init, getSelector, to, currentRoute}
+export { router }
