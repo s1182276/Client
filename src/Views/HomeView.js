@@ -1,3 +1,11 @@
+import "../Components/Leerroute/Year"
+import "../Components/Module/ModuleCard"
+
+export default (() => {
+    const render = async () => {
+        // Logic before rendering
+
+        return `
 <div class="flex-col items-center w-full bg-white rounded-md shadow-md md:p-6 md:w-3/4 lg:w-5/6">
     <div class="mb-4 p-4">
         <label for="input" class="block text-sm font-medium text-gray-700">Leerroute naam</label>
@@ -86,13 +94,13 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(() => {
+`;
+    };
+    const afterRender = () => {
         $('.semester-chooser').on('click', function() {
             const semesterChooser = $(this)[0];
 
-            window.api.retrieveModules().then(() => {
+            window.apiModule.retrieveModules().then(() => {
                 $("module-card").on('click', function() {
                     addModuleToSemester($(this)[0], semesterChooser);
                     $('#semesterModal').addClass('hidden');
@@ -114,12 +122,14 @@
                 modal.addClass('hidden');
             }
         });
+    };
 
-        const addModuleToSemester = ($module, $semesterChooser) => {
-            console.log($module);
-            $($semesterChooser).empty();
-            $($module).removeClass(); //TODO Make this not needed, improve css
-            $semesterChooser.append($module);
-        }
-    })
-</script>
+    const addModuleToSemester = ($module, $semesterChooser) => {
+        console.log($module);
+        $($semesterChooser).empty();
+        $($module).removeClass(); //TODO Make this not needed, improve css
+        $semesterChooser.append($module);
+    };
+
+    return { render, afterRender };
+})();
