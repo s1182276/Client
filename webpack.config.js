@@ -24,6 +24,6 @@ module.exports = {
     plugins: [
         new dotEnv({
             path: path.join(__dirname, '.client.env')
-        }),
+        })
     ]
 };

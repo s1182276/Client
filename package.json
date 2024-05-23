@@ -4,7 +4,7 @@
     "license": "MIT",
     "scripts": {
         "build": "npx tailwindcss -i ./src/Css/main.scss -o ./public/dist/css/app.css && webpack",
-        "dev": "webpack serve",
+        "dev": "webpack serve --config webpack.config.js",
         "test": "jasmine"
     },
     "main": "public/index.html",

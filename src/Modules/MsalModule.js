@@ -1,66 +1,78 @@
 import { PublicClientApplication } from "@azure/msal-browser";
+import { createEvent } from "../Helpers/EventHelper";
 import { AZURE_AD } from "../app.config";
 
-const msalConfig = {
-    auth: {
-        clientId: AZURE_AD.ClientId,
-        authority: AZURE_AD.Authority,
-        redirectUri: AZURE_AD.RedirectUri
-    },
-};
+export default () => {
+    const onAuthStatusChange = createEvent();
 
-const loginRequest = {
-    scopes: ["user.read"],
-};
+    const msalConfig = {
+        auth: {
+            clientId: AZURE_AD.ClientId,
+            authority: AZURE_AD.Authority,
+            redirectUri: AZURE_AD.RedirectUri
+        },
+    };
 
-const msalInstance = new PublicClientApplication(msalConfig);;
+    const loginRequest = {
+        scopes: ["user.read"],
+    };
 
-const init = async () => {
-    await msalInstance.initialize();
-    await msalInstance.handleRedirectPromise();
+    const msalInstance = new PublicClientApplication(msalConfig);;
 
-    const accounts = msalInstance.getAllAccounts();
-    if(accounts.length > 0) {
-        msalInstance.setActiveAccount(accounts[0]);
-    } else {
-        await trySso();
+    const init = async () => {
+        await msalInstance.initialize();
+        await msalInstance.handleRedirectPromise();
+
+        const accounts = msalInstance.getAllAccounts();
+        if(accounts.length > 0) {
+            msalInstance.setActiveAccount(accounts[0]);
+        } else {
+            await trySso();
+        }
     }
-}
 
-const getActiveAccount = () => {
-    return msalInstance.getActiveAccount();
-}
-
-const signIn = async () => {
-    try {
-        let authResult = await msalInstance.loginPopup();
-        msalInstance.setActiveAccount(authResult.account);
-    } catch (error) {
-        console.log("Authentication failed:", error);
-        throw error;
+    const getActiveAccount = () => {
+        return msalInstance.getActiveAccount();
     }
-}
 
-const signOut = async () => {
-    await msalInstance.logoutRedirect({
-        account: getActiveAccount(),
-        postLogoutRedirectUri: window.location
-    });
-}
+    const signIn = async () => {
+        try {
+            let authResult = await msalInstance.loginPopup();
+            msalInstance.setActiveAccount(authResult.account);
 
-const acquireTokenSilent = async () => {
-    let tokenResult = await msalInstance.acquireTokenSilent(loginRequest);
-    return tokenResult.accessToken;
-}
-
-const trySso = async () => {
-    try {
-        let authResult = await msalInstance.ssoSilent(loginRequest);
-        msalInstance.setActiveAccount(authResult.account);
-        return true;
-    } catch (e) {
-        return false;
+            onAuthStatusChange();
+        } catch (error) {
+            console.log("Authentication failed:", error);
+            throw error;
+        }
     }
-}
 
-export { init, getActiveAccount, signIn, signOut, acquireTokenSilent }
+    const signOut = async () => {
+        await msalInstance.logoutRedirect({
+            account: getActiveAccount(),
+            postLogoutRedirectUri: window.location
+        });
+
+        onAuthStatusChange();
+    }
+
+    const acquireTokenSilent = async () => {
+        let tokenResult = await msalInstance.acquireTokenSilent(loginRequest);
+        return tokenResult.accessToken;
+    }
+
+    const trySso = async () => {
+        try {
+            let authResult = await msalInstance.ssoSilent(loginRequest);
+            msalInstance.setActiveAccount(authResult.account);
+            onAuthStatusChange();
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    init();
+
+    return { onAuthStatusChange, getActiveAccount, signIn, signOut, acquireTokenSilent }
+}

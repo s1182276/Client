@@ -1,6 +1,10 @@
-import * as Navigator from './Modules/NavigationManager'
+import navigationManager from './Modules/NavigationManager';
+import apiModule from "./Modules/ApiModule";
+import msalModule from "./Modules/MsalModule";
 
-window.navigationManager = Navigator
+window.navigationManager = navigationManager("root");
+window.apiModule = apiModule();
+window.msalModule = msalModule();
 
-window.addEventListener("popstate", window.navigationManager.router);
-window.addEventListener("DOMContentLoaded", window.navigationManager.router);
+window.addEventListener('DOMContentLoaded', () => window.navigationManager.renderPage());
+window.addEventListener('hashchange', () => window.navigationManager.renderContent());
