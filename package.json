@@ -5,13 +5,17 @@
     "scripts": {
         "build": "npx tailwindcss -i ./src/Css/main.scss -o ./public/dist/css/app.css && webpack",
         "dev": "concurrently \"npx tailwindcss -i ./src/Css/main.scss -o ./public/dist/css/app.css --watch\" \"webpack serve\"",
-        "test": "jasmine"
+        "test": "jasmine",
+        "lint": "npx eslint src/App.js"
     },
     "main": "public/index.html",
     "devDependencies": {
+        "@eslint/js": "^9.3.0",
         "autoprefixer": "^10.4.19",
         "concurrently": "^8.2.2",
         "css-loader": "^7.1.0",
+        "eslint": "^9.3.0",
+        "globals": "^15.3.0",
         "gulp": "^4.0.2",
         "gulp-jasmine": "^4.0.0",
         "jasmine": "^3.99.0",
