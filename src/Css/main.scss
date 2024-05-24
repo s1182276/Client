@@ -103,11 +103,11 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem; /* Optional: Adds space between items */
+  gap: 1rem; 
 }
 
 #school-career leerroute-year {
-  flex: 1 1 calc(50% - 1rem); /* Takes up 50% width minus the gap */
+  flex: 1 1 calc(50% - 1rem); 
   box-sizing: border-box;
 }
 
@@ -127,12 +127,17 @@ body {
   background-color: var(--KeuzewijzerGrey);
 }
 
-
 .schoolYear{
 background-color: var(--KeuzewijzerBeige);
 }
 
 .schoolYearTitle{
-  color: red;
+  //color: red;
   text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  #school-career leerroute-year {
+    flex: 1 1 100%;
+  }
 }

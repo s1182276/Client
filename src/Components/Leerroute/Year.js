@@ -1,15 +1,13 @@
 const template = document.createElement("template");
 template.innerHTML = `
-     <div>   
+     <div >   
         <h5 class="mb-4 text-xl font-bold"></h5>
 
-        <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer transition-colors duration-75 semester-chooser" semester="1">
-            <div class="fuckingWorkAlready">
-                <b>Semester 1</b>
-                <p>Klik hier om een module te kiezen</p>
-            </div>
+        <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer semester-chooser" semester="1">
+            <b>Semester 1</b>
+            <p>Klik hier om een module te kiezen</p>
         </div>
-        <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer transition-colors duration-75 semester-chooser" semester="2">
+        <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer semester-chooser" semester="2">
             <b>Semester 2</b>
             <p>Klik hier om een module te kiezen</p>
         </div>
@@ -56,6 +54,10 @@ class Year extends HTMLElement {
         //event listener to close semester-chooser module
         this.closeModalBtn = this.shadowRoot.querySelector('#closeModal');
         this.closeModalBtn.addEventListener('click', this.closeModal.bind(this));
+
+        //event listener to close semester-chooser module when clicking outside the box
+        this.semesterModel = this.shadowRoot.querySelector("#semesterModal");
+                
     }
     
     showModulePopup(event) {
@@ -65,7 +67,8 @@ class Year extends HTMLElement {
 
         const blockContainer = this.shadowRoot.querySelector('#blockContainer');
 
-        window.api.retrieveModules().then(modules => {
+        window.apiModule.retrieveModules().then(modules => {
+            console.log(modules);
             blockContainer.innerHTML = ''; 
             modules.forEach(module => {
                 const moduleCard = document.createElement('module-card');
@@ -81,6 +84,14 @@ class Year extends HTMLElement {
             });
         });
     }
+
+    
+    // document.addEventListener('mouseup', function(e) {
+    //     let modal = document.getElementById('semesterModal');
+    //     if (!modal.contains(e.target) && modal !== e.target) {
+    //         modal.classList.add('hidden');
+    //     }
+    // });
 
     closeModal(event){
         const semesterModal = this.shadowRoot.querySelector("#semesterModal");
