@@ -10,22 +10,20 @@ class ModuleCard extends HTMLElement {
                 <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="#">Lees meer</a>
             </div>
 
-                <style>
-                    .module-description {
-                        font-size: 1em;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        display: -webkit-box;
-                        -webkit-line-clamp: 5; 
-                        -webkit-box-orient: vertical;
-                    }
-                </style>
-    
+            <style>
+                .module-description {
+                    font-size: 1em;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 5; 
+                    -webkit-box-orient: vertical;
+                }
+            </style>
         `;
     }
 
     connectedCallback() {
-
         this.render();
     }
 
@@ -33,7 +31,7 @@ class ModuleCard extends HTMLElement {
         return ['name', 'description'];
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback() {
         this.render();
     }
 
@@ -45,4 +43,6 @@ class ModuleCard extends HTMLElement {
     }
 }
 
-customElements.define('module-card', ModuleCard);
+if (!customElements.get('module-card')) {
+    customElements.define('module-card', ModuleCard);
+}
