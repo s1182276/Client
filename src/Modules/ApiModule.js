@@ -14,7 +14,6 @@ export default () => {
 
     const retrieveModules = async () => {
         try {
-            console.log("yo");
             return $.ajax({
                 url: `${API_URL}/schoolmodule`
             });

@@ -85,14 +85,6 @@ class Year extends HTMLElement {
         });
     }
 
-    
-    // document.addEventListener('mouseup', function(e) {
-    //     let modal = document.getElementById('semesterModal');
-    //     if (!modal.contains(e.target) && modal !== e.target) {
-    //         modal.classList.add('hidden');
-    //     }
-    // });
-
     closeModal(event){
         const semesterModal = this.shadowRoot.querySelector("#semesterModal");
         semesterModal.classList.add('hidden');
