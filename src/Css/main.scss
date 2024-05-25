@@ -1,3 +1,10 @@
+:root {
+  --KeuzewijzerBeige: #EBDDD4;
+  --KeuzewijzerNavyBlue: #1B3B46;
+  --KeuzewijzerGrey: #b6bac3;
+}
+
+
 html,
 body {
   height: 100%;
@@ -6,6 +13,26 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+
+.libre-baskerville-regular {
+  font-family: "Libre Baskerville", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.libre-baskerville-bold {
+  font-family: "Libre Baskerville", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.libre-baskerville-regular-italic {
+  font-family: "Libre Baskerville", serif;
+  font-weight: 400;
+  font-style: italic;
+}
 
 
 /* Custom CSS */
@@ -70,4 +97,47 @@ body {
 
 .block.flipped {
   transform: rotateY(180deg);
+}
+
+#school-career {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem; 
+}
+
+#school-career leerroute-year {
+  flex: 1 1 calc(50% - 1rem); 
+  box-sizing: border-box;
+}
+
+#addYearBtn{
+  background-color: var(--KeuzewijzerNavyBlue);
+  color: var(--KeuzewijzerBeige);
+}
+
+#addYearBtn:hover{
+  background-color: var(--KeuzewijzerBeige);
+  color: var(--KeuzewijzerNavyBlue);
+  border: solid 2px var(--KeuzewijzerNavyBlue);
+}
+
+.semester-chooser:hover{
+  border: solid 2px var(--KeuzewijzerNavyBlue);
+  background-color: var(--KeuzewijzerGrey);
+}
+
+.schoolYear{
+background-color: var(--KeuzewijzerBeige);
+}
+
+.schoolYearTitle{
+  //color: red;
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  #school-career leerroute-year {
+    flex: 1 1 100%;
+  }
 }
