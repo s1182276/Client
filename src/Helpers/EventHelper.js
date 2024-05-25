@@ -1,4 +1,4 @@
-const createEvent= () => {
+const createEvent = () => {
     var invokeList = [];
 
     var event = function() {

@@ -48,7 +48,9 @@ export default (() => {
         let isLoggedIn = window.msalModule.getActiveAccount() != null;
 
         if(isLoggedIn) {
-            $('#menu-header').text(window.msalModule.getActiveAccount().name);
+            window.apiModule.getCurrentUser().then((user) => {
+                $('#menu-header').text(user.displayName);
+            });
         }
 
         if(buttons == null) {
