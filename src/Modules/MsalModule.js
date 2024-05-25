@@ -17,6 +17,10 @@ export default () => {
         scopes: ["user.read"],
     };
 
+    const tokenRequest = {
+        scopes: ["api://keuzewijzer/All"]
+    }
+
     const msalInstance = new PublicClientApplication(msalConfig);;
 
     const init = async () => {
@@ -57,7 +61,10 @@ export default () => {
     }
 
     const acquireTokenSilent = async () => {
-        let tokenResult = await msalInstance.acquireTokenSilent(loginRequest);
+        let tokenResult = await msalInstance.acquireTokenSilent({
+            ...tokenRequest,
+            account: getActiveAccount()
+        });
         return tokenResult.accessToken;
     }
 
