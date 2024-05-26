@@ -74,9 +74,9 @@ export default (() => {
 
     const render = () => {
         return `
-<header class="bg-zinc-800 p-4">
+<header class="HomeHeader p-4">
     <div class="flex justify-between items-center">
-        <h1 class="text-xl font-bold text-white">Deeltijd Keuzewijzer</h1>
+        <h1 class="text-xl  text-white">Deeltijd Keuzewijzer</h1>
         <button id="menuButton" class="text-white focus:outline-none">
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -85,8 +85,8 @@ export default (() => {
     </div>
 </header>
 
-<div id="menu" class="fixed top-0 right-0 w-64 h-full bg-zinc-800 transform translate-x-full transition-transform duration-300 ease-in-out z-50">
-    <div class="flex justify-between items-center py-4 bg-zinc-800 text-white px-4">
+<div id="menu" class="fixed top-0 right-0 w-64 h-full HomeHeaderMenu transform translate-x-full transition-transform duration-300 ease-in-out z-50">
+    <div class="flex justify-between items-center py-4 text-white px-4">
         <div class="flex items-center justify-center"> <!-- Center button vertically and horizontally -->
             <button id="closeMenuButton" class="text-white focus:outline-none">
                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

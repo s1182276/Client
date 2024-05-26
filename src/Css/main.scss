@@ -13,22 +13,22 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 
 
-.libre-baskerville-regular {
+
+.LibRegular {
   font-family: "Libre Baskerville", serif;
   font-weight: 400;
   font-style: normal;
 }
 
-.libre-baskerville-bold {
+.LibBold {
   font-family: "Libre Baskerville", serif;
   font-weight: 700;
   font-style: normal;
 }
 
-.libre-baskerville-regular-italic {
+.LibRegita {
   font-family: "Libre Baskerville", serif;
   font-weight: 400;
   font-style: italic;
@@ -97,8 +97,13 @@ body {
 
 .block.flipped {
   transform: rotateY(180deg);
+
 }
 
+.HomeHeader,
+.HomeHeaderMenu{
+  background-color: var(--KeuzewijzerNavyBlue);
+}
 #school-career {
   display: flex;
   flex-wrap: wrap;
@@ -111,12 +116,12 @@ body {
   box-sizing: border-box;
 }
 
-#addYearBtn{
+#addYearBtn, #newLearningRouteBtn, #dropdownDefaultButton{
   background-color: var(--KeuzewijzerNavyBlue);
   color: var(--KeuzewijzerBeige);
 }
 
-#addYearBtn:hover{
+#addYearBtn:hover, #newLearningRouteBtn:hover{
   background-color: var(--KeuzewijzerBeige);
   color: var(--KeuzewijzerNavyBlue);
   border: solid 2px var(--KeuzewijzerNavyBlue);
@@ -131,8 +136,9 @@ body {
 background-color: var(--KeuzewijzerBeige);
 }
 
-.schoolYearTitle{
-  //color: red;
+
+.schoolYeartitle{
+  //color: red;;
   text-transform: uppercase;
 }
 
