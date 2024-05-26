@@ -11,6 +11,16 @@ export default () => {
         }
     }
 
+    const getModuleInfo = async (id) => {
+        try {
+            return await apiHelper.getAsync("schoolmodule", id)
+        }
+        catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
     const getCurrentUser = async () => {
         try {
             return await apiHelper.getAsync("appuser");
@@ -20,5 +30,5 @@ export default () => {
         }
     }
 
-    return { getAllModules, getCurrentUser }
+    return { getAllModules, getModuleInfo, getCurrentUser }
 }

@@ -7,7 +7,7 @@ class ModuleCard extends HTMLElement {
                 <h2 class="module-name"></h2>
                 <p class="module-description"></p>
                 </br>
-                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="#">Lees meer</a>
+                <a id="moreInfo" class="font-medium text-blue-600 dark:text-blue-500 hover:underline" href="#">Lees meer</a>
             </div>
 
                 <style>
@@ -41,7 +41,7 @@ class ModuleCard extends HTMLElement {
         const name = this.getAttribute('name');
         const description = this.getAttribute('description');
         this.shadowRoot.querySelector('.module-name').innerText = name;
-        this.shadowRoot.querySelector('.module-description').innerText = description;
+        this.shadowRoot.querySelector('.module-description').innerHTML = description;
     }
 }
 

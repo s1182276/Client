@@ -18,14 +18,18 @@ template.innerHTML = `
     <div class="bg-white p-8 rounded-lg sm:w-full md:w-5/6 xl:w-2/3 max-h-[80%] overflow-y-auto">
         <div class="p-8">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold">Module keuze</h2>
+                <h2 class="text-xl font-semibold #modalTitle">Module keuze</h2>
                 <div class="ml-auto flex">
                     <button id="closeModal" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">Sluit</button>
                 </div>
             </div>
         </div>
 
-        <div class="flex flex-wrap -mx-4 justify-evenly" id="blockContainer">
+        <div class="flex flex-wrap -mx-4 justify-evenly hidden" id="blockContainer">
+            <!-- Dynamic blocks will be added here -->
+        </div>
+        
+        <div class="flex flex-wrap -mx-4 justify-evenly hidden" id="blockContainerInfo">
             <!-- Dynamic blocks will be added here -->
         </div>
     </div>
@@ -57,15 +61,15 @@ class Year extends HTMLElement {
 
         //event listener to close semester-chooser module when clicking outside the box
         this.semesterModel = this.shadowRoot.querySelector("#semesterModal");
-                
     }
-    
+
     showModulePopup(event) {
         const semester = event.currentTarget.getAttribute('semester');
         const semesterModal = this.shadowRoot.querySelector('#semesterModal');
-        semesterModal.classList.remove('hidden');
-
         const blockContainer = this.shadowRoot.querySelector('#blockContainer');
+        semesterModal.classList.remove('hidden');
+        blockContainer.classList.remove('hidden');
+
 
         window.apiModule.getAllModules().then(modules => {
             console.log(modules);
@@ -77,9 +81,16 @@ class Year extends HTMLElement {
                 moduleCard.setAttribute('name', module.name);
                 moduleCard.setAttribute('description', module.description);
                 blockContainer.appendChild(moduleCard);
+
                 moduleCard.addEventListener('click', () => {
                     this.addModuleToSemester(moduleCard, semester);
                     semesterModal.classList.add('hidden');
+                });
+
+                const moreInfo = moduleCard.shadowRoot.querySelector('#moreInfo');
+                moreInfo.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.loadModuleInfo(module.id);
                 });
             });
         });
@@ -87,8 +98,11 @@ class Year extends HTMLElement {
 
     closeModal(event){
         const semesterModal = this.shadowRoot.querySelector("#semesterModal");
+        const blockContainer = this.shadowRoot.querySelector("#blockContainer");
+        const blockContainerInfo = this.shadowRoot.querySelector("#blockContainerInfo");
         semesterModal.classList.add('hidden');
-        blockContainer.innerHTML = '';
+        blockContainer.classList.add('hidden');
+        blockContainerInfo.classList.add('hidden');
     };
 
     addModuleToSemester(module, semester) {
@@ -97,6 +111,51 @@ class Year extends HTMLElement {
         module.classList = ''; 
         module.removeAttribute("description");
         semesterChooser.appendChild(module);
+    }
+
+    loadModuleInfo(moduleId) {
+        console.log('loading module info');
+        window.apiModule.getModuleInfo(moduleId).then(module => {
+            const blockContainer = this.shadowRoot.querySelector("#blockContainer");
+            const blockContainerInfo = this.shadowRoot.querySelector("#blockContainerInfo");
+            blockContainer.classList.add('hidden');
+            blockContainerInfo.innerHTML = '';
+            blockContainerInfo.classList.remove('hidden');
+
+            // update modal title
+            //const semesterModal = this.querySelector('#semesterModal');
+            //semesterModal.querySelector('#modalTitle').innerText = 'Module Informatie';
+
+            // create module info component
+            const moduleInfo = document.createElement('module-info');
+            moduleInfo.className = 'box-border flex flex-col p-6 mb-8 w-full bg-inherit rounded-lg shadow-md transition-colors duration-75 px-4 mx-4';
+            moduleInfo.setAttribute('moduleid', module.id);
+            moduleInfo.setAttribute('name', module.name);
+            moduleInfo.setAttribute('description', module.description);
+            moduleInfo.setAttribute('prequired', module.prequired);
+            moduleInfo.setAttribute('minimalEC', module.minimalEC);
+            //moduleInfo.setAttribute('level', module.level);
+            moduleInfo.setAttribute('schoolYearName', module.schoolYear.name);
+            moduleInfo.setAttribute('semester', module.semester);
+
+            let requiredModules = [];
+            if (module.entryRequirementsModule !== null) {
+                for(const entryRequirement of module.entryRequirementModules) {
+                    window.apiModule.getModuleInfo(entryRequirement.moduleId).then((module) => {
+                        requiredModules.push(module);
+                    });
+                }
+            }
+
+            moduleInfo.setAttribute('requiredModules', JSON.stringify(requiredModules));
+            blockContainerInfo.appendChild(moduleInfo);
+
+            // event listener to close module info
+            moduleInfo.addEventListener('click', () => {
+                blockContainerInfo.classList.add('hidden');
+                blockContainer.classList.remove('hidden');
+            });
+        });
     }
 }
 
