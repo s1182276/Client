@@ -1,7 +1,7 @@
 const template = document.createElement("template");
 template.innerHTML = `
      <div >   
-        <h5 class="mb-4 text-xl font-bold"></h5>
+        <h5 class="mb-4 text-xl LibRegita"></h5>
 
         <div class="flex flex-col p-6 mb-8 bg-white rounded-xl hover:cursor-pointer semester-chooser" semester="1">
             <b>Semester 1</b>

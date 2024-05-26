@@ -10,7 +10,6 @@ export default () => {
             throw error;
         }
     }
-
     const getCurrentUser = async () => {
         try {
             return await apiHelper.getAsync("appuser");
