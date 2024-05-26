@@ -67,7 +67,7 @@ class Year extends HTMLElement {
 
         const blockContainer = this.shadowRoot.querySelector('#blockContainer');
 
-        window.apiModule.retrieveModules().then(modules => {
+        window.apiModule.getAllModules().then(modules => {
             console.log(modules);
             blockContainer.innerHTML = ''; 
             modules.forEach(module => {

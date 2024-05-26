@@ -1,7 +1,11 @@
 import {API_URL} from "../app.config";
 
 const getToken = async () => {
-    return await window.msalModule.acquireTokenSilent();
+    if(window.msalModule.getActiveAccount() != null){
+        return await window.msalModule.acquireTokenSilent();
+    }
+
+    return null;
 }
 
 export const getAsync = async (path, id) => {
