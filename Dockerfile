@@ -3,14 +3,15 @@ FROM node:22.0.0-alpine3.19 as build
 
 WORKDIR /app
 
+# Copy package.json and install dependencies with verbose logging
 COPY package.json ./
-
-RUN npm install
+RUN npm install --verbose
 
 ARG API_URL
 
 COPY . .
 
+# Output the API_URL to ensure the environment variable is set correctly
 RUN echo API_URL=$API_URL > .client.env
 
 RUN rm -rf ./public
