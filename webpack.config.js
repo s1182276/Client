@@ -1,6 +1,7 @@
 const path = require('path');
 const dotEnv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -57,6 +58,11 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './public/index.html',
             filename: 'index.html'
+        }),
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: 'src/css/tinymce.min.css', to: 'css' }
+            ]
         })
     ]
 };
