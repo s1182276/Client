@@ -1,6 +1,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/node,visualstudio,visualstudiocode,webstorm+all
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,visualstudio,visualstudiocode,webstorm+all
 
+# Public folder
+public
+./public/*
+
 ### Node ###
 # Logs
 logs

@@ -13,6 +13,8 @@ COPY . .
 
 RUN echo API_URL=$API_URL > .client.env
 
+RUN rm -rf ./public
+
 RUN npm run build
 
 # Copy built files to Nginx
