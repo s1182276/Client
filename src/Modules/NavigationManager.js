@@ -1,44 +1,43 @@
-let navigationSelector;
-const HOME_PAGE = 'screen_1'
+import disclaimerView from "../Views/DisclaimerView";
+import feedbackView from "../Views/FeedbackView";
+import headerView from '../Views/Header'
+import homeView from '../Views/HomeView';
+import myChoicesView from "../Views/MyChoicesView";
+import myStudyProgressView from '../Views/MyStudyProgressView';
+import settingsView from "../Views/SettingsView";
+import newLearningRouteView from "../Views/NewLearningRouteView";
 
-const init = (selector) => {
-    navigationSelector = $(selector)
-}
+export default (rootId) => {
+    const root = document.getElementById(rootId);
 
-const getSelector = () => {
-    return navigationSelector
-}
-
-/**
- * Navigate to another screen
- * @param screenName screen name to navigate to
- */
-const to = (screenName = '') => {
-
-    // 1. Validate screen name parameter
-    if (screenName === '')
-        return
-
-    // 2. Set the new screen as current route
-    localStorage.setItem('route', screenName)
-
-    // 3. Remove old screen and replace
-    $('#app').empty().load(`views/${screenName}.html`)
-
-    // 4. Update Route selector
-    getSelector().val(screenName)
-}
-
-/**
- * Retrieve the current route
- * @returns {string}
- */
-const currentRoute = () => {
-    let storedRoute = localStorage.getItem('route')
-    if (storedRoute === null) {
-        storedRoute = HOME_PAGE
+    const routes = {
+        "/": homeView,
+        "/mijn-keuzes": myChoicesView,
+        "/mijn-studievoortgang": myStudyProgressView,
+        "/instellingen": settingsView,
+        "/feedback": feedbackView,
+        "/disclaimer": disclaimerView,
+        "/leerroute" : newLearningRouteView,
     }
-    return storedRoute
-}
 
-export {init, getSelector, to, currentRoute}
+    async function renderPage() {
+        root.insertAdjacentHTML('afterbegin', headerView.render());
+        root.insertAdjacentHTML('beforeend', '<div id="content" class="container w-full mx-auto py-8 flex flex-col justify-center items-center min-h-1/2 lg:w-10/12">');
+        headerView.afterRender();
+        await renderContent();
+    }
+
+    async function renderContent() {
+        const url = requestURL();
+        let page = routes[url] || homeView;
+        document.getElementById('content').innerHTML = await page.render();
+        page.afterRender();
+    }
+
+    function requestURL() {
+        const [, resource = ''] = location.hash.slice(1).toLowerCase().split('/');
+        return (`/${resource}`);
+    }
+
+    return { renderContent, renderPage };
+}

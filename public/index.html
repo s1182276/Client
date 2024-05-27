@@ -5,75 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
         <!-- Stylesheets -->
-<!--        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">-->
         <link href="dist/css/app.css" type="text/css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@1,400&display=swap" rel="stylesheet">
 
         <title>HBO-ICT Keuzewijzer Deeltijd</title>
 
         <link rel="manifest" href="manifest.json">
     </head>
     <body class="flex flex-col h-screen bg-gray-100">
-        <div class="mx-2 mx-md-0 flex-grow h-screen">
-            <!-- Header -->
-            <header class="bg-gray-100 py-4 flex justify-between items-center">
-                <div class="container mx-auto">
-                    <h1 class="text-3xl font-bold text-gray-900">HBO-ICT Keuzewijzer Deeltijd</h1>
-                </div>
-                <div class="ml-4">
-                    <div class="flex items-center">
-                        <label class="block text-sm font-medium text-gray-700 mr-2">
-                            Selecteer een leerroute
-                            <select id="route_select" class="block p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" disabled>
-                                <option value="">Bezig met laden...</option>
-                            </select>
-                        </label>
-                    </div>
-                </div>
-            </header>
-
-            <!-- Main Content -->
-            <main id="app" class="container w-full mx-auto py-8 flex flex-col justify-center items-center min-h-1/2 lg:w-10/12">
-                <loading-overlay></loading-overlay>
-                <!-- Your main content goes here -->
-            </main>
-        </div>
-
+        <div id="root"></div>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <script src="dist/js/bundle.js" type="module"></script>
-        <script defer>
-            $(document).ready(() => {
-                let loading = true
-                const simulateDelay = async ms => new Promise(resolve => setTimeout(resolve, ms))
-
-                // Start app by loading the leerroutes from API
-                // Then initialize some elements
-                api.retrieveLeerroutes().then(async () => {
-
-                    // 1. Simulate api response time
-                    console.log('Api response was 1650ms')
-                    await simulateDelay(1650)
-
-                    // 2. Done loading, remove loading animation
-                    $('#screen_loading').fadeOut()
-
-                    // 3. Fadeout loading screen and load
-                    setTimeout(() => {
-                        navigationManager.to(navigationManager.currentRoute())
-                        console.log('Alles is gereed!')
-                    }, 150)
-                }).finally(async () => {
-                    // 4. When response is done, remove 'bezig met laden...' option
-                    //    Remove disabled attribute
-                    navigationManager.getSelector().find('option:first-child').remove();
-                    navigationManager.getSelector().attr('disabled', null)
-                })
-
-                // Dit nog ergens anders neer zetten.
-                navigationManager.getSelector().on('change', () => {
-                    let selectedScreen = navigationManager.getSelector().val()
-                    navigationManager.to(selectedScreen)
-                })
-            })
-        </script>
     </body>
 </html>
