@@ -18,7 +18,7 @@ template.innerHTML = `
     <div class="bg-white p-8 rounded-lg sm:w-full md:w-5/6 xl:w-2/3 max-h-[80%] overflow-y-auto">
         <div class="p-8">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-semibold #modalTitle">Module keuze</h2>
+                <h2 class="text-xl font-semibold">Module keuze</h2>
                 <div class="ml-auto flex">
                     <button id="closeModal" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">Sluit</button>
                 </div>
@@ -122,10 +122,7 @@ class Year extends HTMLElement {
             blockContainerInfo.innerHTML = '';
             blockContainerInfo.classList.remove('hidden');
 
-            // update modal title
-            //const semesterModal = this.querySelector('#semesterModal');
-            //semesterModal.querySelector('#modalTitle').innerText = 'Module Informatie';
-
+            
             // create module info component
             const moduleInfo = document.createElement('module-info');
             moduleInfo.className = 'box-border flex flex-col p-6 mb-8 w-full bg-inherit rounded-lg shadow-md transition-colors duration-75 px-4 mx-4';
