@@ -44,7 +44,7 @@ class ModuleInfo extends HTMLElement {
                     </table>
                 </div>
             </div>
-            <link href="https://cdn.jsdelivr.net/npm/tinymce@7.1.1/skins/content/default/content.min.css" type="text/css" rel="stylesheet">
+            <link href="dist/css/tinymce.min.css" type="text/css" rel="stylesheet">
             <link href="dist/css/app.css" type="text/css" rel="stylesheet">
             `;
     }
