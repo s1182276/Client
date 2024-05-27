@@ -61,7 +61,7 @@ module.exports = {
         }),
         new CopyWebpackPlugin({
             patterns: [
-                { from: 'src/css/tinymce.min.css', to: 'css' }
+                { from: 'src/Css/tinymce.min.css', to: 'css' }
             ]
         })
     ]
