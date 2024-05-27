@@ -46,18 +46,19 @@ export default (() => {
     }
 
     document.getElementById('mijnLeerroutes').addEventListener('click', function() {
-      var menu = document.getElementById('mijnLeerroutesMenu');
+      let menu = document.getElementById('mijnLeerroutesMenu');
       menu.classList.toggle('hidden');
     });
   
     window.addEventListener('click', function(e) {
-      var button = document.getElementById('mijnLeerroutes');
-      var menu = document.getElementById('mijnLeerroutesMenu');
-      if (!button.contains(e.target) && !menu.contains(e.target)) {
-        menu.classList.add('hidden');
+      let button = document.getElementById('mijnLeerroutes');
+      if(button != null) {
+        let menu = document.getElementById('mijnLeerroutesMenu');
+        if (!button.contains(e.target) && !menu.contains(e.target)) {
+          menu.classList.add('hidden');
+        }
       }
     });
-  
   };
 
   
