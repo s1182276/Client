@@ -56,12 +56,14 @@ module.exports = {
             path: path.join(__dirname, '.client.env')
         }),
         new HtmlWebpackPlugin({
-            template: './public/index.html',
-            filename: 'index.html'
+            template: './src/index.html',
+            filename: '../index.html'
         }),
         new CopyWebpackPlugin({
             patterns: [
-                { from: 'src/Css/tinymce.min.css', to: 'css' }
+                { from: 'src/Css/tinymce.min.css', to: 'css' },
+                { from: 'src/manifest.json', to: '../manifest.json' },
+                { from: 'lib/jquery-3.7.1.js', to: 'lib/jquery-3.7.1.js' }
             ]
         })
     ]
