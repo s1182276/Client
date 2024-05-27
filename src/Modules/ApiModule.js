@@ -10,7 +10,7 @@ export default () => {
             throw error;
         }
     }
-
+    
     const getModuleInfo = async (id) => {
         try {
             return await apiHelper.getAsync("schoolmodule", id)
