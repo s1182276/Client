@@ -30,5 +30,18 @@ export default () => {
         }
     }
 
-    return { getAllModules, getModuleInfo, getCurrentUser }
+    const updateUserStudyProgress = async (ecPoints, startingYear, hasPropedeuse) => {
+        try {
+            return await apiHelper.putAsync("appuser/study-progress", "", {
+                ecPoints: ecPoints,
+                startingYear: startingYear,
+                hasPropedeuse: hasPropedeuse,
+            });
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
+    return { getAllModules, getModuleInfo, getCurrentUser, updateUserStudyProgress }
 }
