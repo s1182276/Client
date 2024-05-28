@@ -8,8 +8,8 @@
         "dev": "npm-run-all prebuild webpack:serve",
         "webpack:build": "webpack",
         "webpack:serve": "webpack serve --config webpack.config.js",
-        "test": "jasmine"
-        "lint": "npx eslint src/App.js",
+        "test": "jasmine",
+        "lint": "npx eslint src/App.js"
     },
     "main": "public/index.html",
     "devDependencies": {
