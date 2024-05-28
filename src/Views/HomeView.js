@@ -6,7 +6,7 @@ export default (() => {
 
       return `
 
-      <div class="flex items-center justify-center min-h-screen">
+      <div class="flex items-center justify-center">
       
       <button type="button" class="rounded-full py-2 px-4" id="newLearningRouteBtn">Nieuwe leerroute</button>
 

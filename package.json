@@ -3,10 +3,13 @@
     "version": "1.0.0",
     "license": "MIT",
     "scripts": {
-        "build": "npx tailwindcss -i ./src/Css/main.scss -o ./public/dist/css/app.css && webpack",
-        "test": "jasmine",
+        "prebuild": "npx tailwindcss -i ./src/Css/main.scss -o ./public/dist/css/app.css",
+        "build": "npm-run-all prebuild webpack:build",
+        "dev": "npm-run-all prebuild webpack:serve",
+        "webpack:build": "webpack",
+        "webpack:serve": "webpack serve --config webpack.config.js",
+        "test": "jasmine"
         "lint": "npx eslint src/App.js",
-        "dev": "webpack serve --config webpack.config.js"
     },
     "main": "public/index.html",
     "devDependencies": {
@@ -26,6 +29,7 @@
         "jasmine": "^3.99.0",
         "jquery": "^3.7.1",
         "mini-css-extract-plugin": "^2.8.1",
+        "npm-run-all": "^4.1.5",
         "postcss": "^8.4.38",
         "postcss-loader": "^8.1.1",
         "postcss-preset-env": "^9.5.4",

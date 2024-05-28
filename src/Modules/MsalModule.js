@@ -1,6 +1,6 @@
 import { PublicClientApplication } from "@azure/msal-browser";
 import { createEvent } from "../Helpers/EventHelper";
-import { AZURE_AD } from "../app.config";
+import { AZURE_AD, AZURE_AD_REDIRECT_URI } from "../app.config";
 
 export default () => {
     const onAuthStatusChange = createEvent();
@@ -9,7 +9,7 @@ export default () => {
         auth: {
             clientId: AZURE_AD.ClientId,
             authority: AZURE_AD.Authority,
-            redirectUri: AZURE_AD.RedirectUri
+            redirectUri: AZURE_AD_REDIRECT_URI
         },
     };
 
