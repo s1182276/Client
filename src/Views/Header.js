@@ -1,7 +1,7 @@
 import {MenuButton } from "../Classes/MenuButton";
 
 export default (() => {
-    const buttonClasses = [ 'text-white', 'py-2', 'px-4', 'hover:bg-gray-800', 'cursor-pointer' ];
+    const buttonClasses = [ 'text-white', 'py-2', 'px-4', 'hover:bg-gray-800', 'hover:cursor-pointer', 'cursor-pointer' ];
 
     const buttonsLoggedIn = [
         new MenuButton("logout-button", "Uitloggen", () => {
@@ -46,9 +46,13 @@ export default (() => {
 
     const redrawMenu = (buttons) => {
         let isLoggedIn = window.msalModule.getActiveAccount() != null;
-
         if(isLoggedIn) {
             window.apiModule.getCurrentUser().then((user) => {
+                if(user.isFirstSignIn){
+                    // Prompt users to fill in their study progress on first sign in
+                    redirectTo("mijn-studievoortgang");
+                }
+
                 $('#menu-header').text(user.displayName);
             });
         }
@@ -76,7 +80,7 @@ export default (() => {
         return `
 <header class="HomeHeader p-4">
     <div class="flex justify-between items-center">
-        <h1 class="text-xl  text-white">Deeltijd Keuzewijzer</h1>
+        <h1 id="header-text" class="text-xl text-white hover:cursor-pointer">Deeltijd Keuzewijzer</h1>
         <button id="menuButton" class="text-white focus:outline-none">
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -114,6 +118,10 @@ export default (() => {
         $('#closeMenuButton').on('click', () => {
             menu.toggleClass('translate-x-full');
         });
+
+        $('#header-text').on('click', () => {
+            redirectTo("");
+        })
 
         redrawMenu();
     }
