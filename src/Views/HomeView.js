@@ -1,3 +1,4 @@
+import NavigationManager from "../Modules/NavigationManager";
 import "../Components/Leerroute/Year";
 import "../Components/Module/ModuleCard";
 import ApiService from '../Services/ApiService';
@@ -166,5 +167,5 @@ export default (() => {
         }
     });
 
-    return { render, afterRender };
+  return { render, afterRender };
 })();

@@ -1,7 +1,11 @@
 import {API_URL} from "../app.config";
 
 const getToken = async () => {
-    return await window.msalModule.acquireTokenSilent();
+    if(window.msalModule.getActiveAccount() != null){
+        return await window.msalModule.acquireTokenSilent();
+    }
+
+    return null;
 }
 
 export const getAsync = async (path, id) => {
@@ -38,7 +42,8 @@ export const putAsync = async (path, id, data) => {
     let url = `${API_URL}/${path}/${id}`;
     let token = await getToken();
 
-    return await $.put({
+    return await $.ajax({
+        method: "PUT",
         url: url,
         data: JSON.stringify(data),
         beforeSend: function (xhr) {

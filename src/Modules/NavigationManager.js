@@ -5,6 +5,7 @@ import homeView from '../Views/HomeView';
 import myChoicesView from "../Views/MyChoicesView";
 import myStudyProgressView from '../Views/MyStudyProgressView';
 import settingsView from "../Views/SettingsView";
+import newLearningRouteView from "../Views/NewLearningRouteView";
 
 export default (rootId) => {
     const root = document.getElementById(rootId);
@@ -16,6 +17,7 @@ export default (rootId) => {
         "/instellingen": settingsView,
         "/feedback": feedbackView,
         "/disclaimer": disclaimerView,
+        "/leerroute" : newLearningRouteView,
     };
 
     async function renderPage() {

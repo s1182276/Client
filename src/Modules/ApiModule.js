@@ -10,6 +10,16 @@ export default () => {
             throw error;
         }
     }
+    
+    const getModuleInfo = async (id) => {
+        try {
+            return await apiHelper.getAsync("schoolmodule", id)
+        }
+        catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
 
     const getCurrentUser = async () => {
         try {
@@ -20,5 +30,18 @@ export default () => {
         }
     }
 
-    return { getAllModules, getCurrentUser }
+    const updateUserStudyProgress = async (ecPoints, startingYear, hasPropedeuse) => {
+        try {
+            return await apiHelper.putAsync("appuser/study-progress", "", {
+                ecPoints: ecPoints,
+                startingYear: startingYear,
+                hasPropedeuse: hasPropedeuse,
+            });
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+
+    return { getAllModules, getModuleInfo, getCurrentUser, updateUserStudyProgress }
 }
