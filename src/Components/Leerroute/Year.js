@@ -54,7 +54,7 @@ class Year extends HTMLElement {
         const blockContainer = this.shadowRoot.querySelector('#blockContainer');
         blockContainer.innerHTML = '';
 
-        const modules = await window.apiModule.retrieveModules();
+        const modules = await window.apiModule.getAllModules();
         modules.forEach(module => {
             const moduleCard = document.createElement('module-card');
             moduleCard.className = 'box-border flex flex-col p-2 mb-4 sm:w-full sm:mb-6 md:mb-12 md:w-2/5 lg:w-3/12 xl:w-2/12 bg-gray-100 rounded-lg shadow-md hover:cursor-pointer transition-colors duration-75 px-4 mx-4';
