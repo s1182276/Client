@@ -72,7 +72,6 @@ class Year extends HTMLElement {
 
 
         window.apiModule.getAllModules().then(modules => {
-            console.log(modules);
             blockContainer.innerHTML = ''; 
             modules.forEach(module => {
                 const moduleCard = document.createElement('module-card');
@@ -90,6 +89,7 @@ class Year extends HTMLElement {
                 const moreInfo = moduleCard.shadowRoot.querySelector('#moreInfo');
                 moreInfo.addEventListener('click', (e) => {
                     e.stopPropagation();
+                    e.preventDefault();
                     this.loadModuleInfo(module.id);
                 });
             });
@@ -114,7 +114,6 @@ class Year extends HTMLElement {
     }
 
     loadModuleInfo(moduleId) {
-        console.log('loading module info');
         window.apiModule.getModuleInfo(moduleId).then(module => {
             const blockContainer = this.shadowRoot.querySelector("#blockContainer");
             const blockContainerInfo = this.shadowRoot.querySelector("#blockContainerInfo");
@@ -122,7 +121,6 @@ class Year extends HTMLElement {
             blockContainerInfo.innerHTML = '';
             blockContainerInfo.classList.remove('hidden');
 
-            
             // create module info component
             const moduleInfo = document.createElement('module-info');
             moduleInfo.className = 'box-border flex flex-col p-6 mb-8 w-full bg-inherit rounded-lg shadow-md transition-colors duration-75 px-4 mx-4';
@@ -131,8 +129,7 @@ class Year extends HTMLElement {
             moduleInfo.setAttribute('description', module.description);
             moduleInfo.setAttribute('prequired', module.prequired);
             moduleInfo.setAttribute('minimalEC', module.minimalEC);
-            //moduleInfo.setAttribute('level', module.level);
-            moduleInfo.setAttribute('schoolYearName', module.schoolYear.name);
+            moduleInfo.setAttribute('schoolYearName', module.schoolYear ? module.schoolYear.name : '');
             moduleInfo.setAttribute('semester', module.semester);
 
             let requiredModules = [];
@@ -148,7 +145,8 @@ class Year extends HTMLElement {
             blockContainerInfo.appendChild(moduleInfo);
 
             // event listener to close module info
-            moduleInfo.addEventListener('click', () => {
+            moduleInfo.addEventListener('click', (e) => {
+                e.stopPropagation();
                 blockContainerInfo.classList.add('hidden');
                 blockContainer.classList.remove('hidden');
             });
