@@ -104,6 +104,7 @@ class LeerrouteYear extends HTMLElement {
           const moreInfo = moduleCard.shadowRoot.querySelector('#moreInfo');
           moreInfo.addEventListener('click', (e) => {
             e.stopPropagation();
+            e.preventDefault();
             this.loadModuleInfo(module.id);
           });
         });
@@ -118,14 +119,50 @@ class LeerrouteYear extends HTMLElement {
   
       addModuleToSemester(moduleCard, semester) {
         const semesterChooser = this.shadowRoot.querySelector(`.semester-chooser[semester="${semester}"]`);
-        //semesterChooser.innerHTML = '';
-        //moduleCard.classList = '';
+        semesterChooser.innerHTML = '';
+        moduleCard.classList = '';
         moduleCard.removeAttribute("description");
         semesterChooser.appendChild(moduleCard);
       }
   
       async loadModuleInfo(moduleId) {
-        // Implement the logic to load and display module information
+        window.apiModule.getModuleInfo(moduleId).then(module => {
+            const blockContainer = this.shadowRoot.querySelector("#blockContainer");
+            const blockContainerInfo = this.shadowRoot.querySelector("#blockContainerInfo");
+            blockContainer.classList.add('hidden');
+            blockContainerInfo.innerHTML = '';
+            blockContainerInfo.classList.remove('hidden');
+
+            // create module info component
+            const moduleInfo = document.createElement('module-info');
+            moduleInfo.className = 'box-border flex flex-col p-6 mb-8 w-full bg-inherit rounded-lg shadow-md transition-colors duration-75 px-4 mx-4';
+            moduleInfo.setAttribute('moduleid', module.id);
+            moduleInfo.setAttribute('name', module.name);
+            moduleInfo.setAttribute('description', module.description);
+            moduleInfo.setAttribute('prequired', module.prequired);
+            moduleInfo.setAttribute('minimalEC', module.minimalEC);
+            moduleInfo.setAttribute('schoolYearName', module.schoolYear ? module.schoolYear.name : '');
+            moduleInfo.setAttribute('semester', module.semester);
+
+            let requiredModules = [];
+            if (module.entryRequirementsModule !== null) {
+                for(const entryRequirement of module.entryRequirementModules) {
+                    window.apiModule.getModuleInfo(entryRequirement.moduleId).then((module) => {
+                        requiredModules.push(module);
+                    });
+                }
+            }
+
+            moduleInfo.setAttribute('requiredModules', JSON.stringify(requiredModules));
+            blockContainerInfo.appendChild(moduleInfo);
+
+            // event listener to close module info
+            moduleInfo.addEventListener('click', (e) => {
+                e.stopPropagation();
+                blockContainerInfo.classList.add('hidden');
+                blockContainer.classList.remove('hidden');
+            });
+        });
       }
 }
 

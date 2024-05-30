@@ -92,4 +92,6 @@ class ModuleInfo extends HTMLElement {
     }
 }
 
-customElements.define('module-info', ModuleInfo);
+if (!customElements.get('module-info')) {
+    customElements.define('module-info', ModuleInfo);
+}
