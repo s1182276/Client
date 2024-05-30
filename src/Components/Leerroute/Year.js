@@ -59,27 +59,33 @@
 //         const blockContainer = this.shadowRoot.querySelector('#blockContainer');
 //         blockContainer.innerHTML = '';
 
-//         const modules = await window.apiModule.getAllModules();
-//         modules.forEach(module => {
-//             const moduleCard = document.createElement('module-card');
-//             moduleCard.className = 'box-border flex flex-col p-2 mb-4 sm:w-full sm:mb-6 md:mb-12 md:w-2/5 lg:w-3/12 xl:w-2/12 bg-gray-100 rounded-lg shadow-md hover:cursor-pointer transition-colors duration-75 px-4 mx-4';
-//             moduleCard.setAttribute('moduleid', module.id);
-//             moduleCard.setAttribute('name', module.name);
-//             moduleCard.setAttribute('description', module.description);
-//             blockContainer.appendChild(moduleCard);
-//             moduleCard.addEventListener('click', () => {
-//                 this.addModuleToSemester(moduleCard, semester);
-//                 semesterModal.classList.add('hidden');
-//             });
-//             const moreInfo = moduleCard.shadowRoot.querySelector('#moreInfo');
+
+//         window.apiModule.getAllModules().then(modules => {
+//             blockContainer.innerHTML = ''; 
+//             modules.forEach(module => {
+//                 const moduleCard = document.createElement('module-card');
+//                 moduleCard.className = 'box-border flex flex-col p-2 mb-4 sm:w-full sm:mb-6 md:mb-12 md:w-2/5 lg:w-3/12 xl:w-2/12 bg-gray-100 rounded-lg shadow-md hover:cursor-pointer transition-colors duration-75 px-4 mx-4';
+//                 moduleCard.setAttribute('moduleid', module.id);
+//                 moduleCard.setAttribute('name', module.name);
+//                 moduleCard.setAttribute('description', module.description);
+//                 blockContainer.appendChild(moduleCard);
+
+//                 moduleCard.addEventListener('click', () => {
+//                     this.addModuleToSemester(moduleCard, semester);
+//                     semesterModal.classList.add('hidden');
+//                 });
+
+//                 const moreInfo = moduleCard.shadowRoot.querySelector('#moreInfo');
 //                 moreInfo.addEventListener('click', (e) => {
 //                     e.stopPropagation();
+//                     e.preventDefault();
 //                     this.loadModuleInfo(module.id);
 //                 });
+//             });
 //         });
-//     };
+//     }
 
-//     closeModal() {
+//     closeModal(event){
 //         const semesterModal = this.shadowRoot.querySelector("#semesterModal");
 //         const blockContainer = this.shadowRoot.querySelector("#blockContainer");
 //         const blockContainerInfo = this.shadowRoot.querySelector("#blockContainerInfo");
@@ -90,13 +96,54 @@
 
 //     addModuleToSemester(module, semester) {
 //         const semesterChooser = this.shadowRoot.querySelector(`.semester-chooser[semester="${semester}"]`);
-//         semesterChooser.innerHTML = '';
-//         module.classList = '';
+//         semesterChooser.innerHTML = ''; 
+//         module.classList = ''; 
 //         module.removeAttribute("description");
 //         semesterChooser.appendChild(module);
 //     }
+
+//     loadModuleInfo(moduleId) {
+//         window.apiModule.getModuleInfo(moduleId).then(module => {
+//             const blockContainer = this.shadowRoot.querySelector("#blockContainer");
+//             const blockContainerInfo = this.shadowRoot.querySelector("#blockContainerInfo");
+//             blockContainer.classList.add('hidden');
+//             blockContainerInfo.innerHTML = '';
+//             blockContainerInfo.classList.remove('hidden');
+
+//             // create module info component
+//             const moduleInfo = document.createElement('module-info');
+//             moduleInfo.className = 'box-border flex flex-col p-6 mb-8 w-full bg-inherit rounded-lg shadow-md transition-colors duration-75 px-4 mx-4';
+//             moduleInfo.setAttribute('moduleid', module.id);
+//             moduleInfo.setAttribute('name', module.name);
+//             moduleInfo.setAttribute('description', module.description);
+//             moduleInfo.setAttribute('prequired', module.prequired);
+//             moduleInfo.setAttribute('minimalEC', module.minimalEC);
+//             moduleInfo.setAttribute('schoolYearName', module.schoolYear ? module.schoolYear.name : '');
+//             moduleInfo.setAttribute('semester', module.semester);
+
+//             let requiredModules = [];
+//             if (module.entryRequirementsModule !== null) {
+//                 for(const entryRequirement of module.entryRequirementModules) {
+//                     window.apiModule.getModuleInfo(entryRequirement.moduleId).then((module) => {
+//                         requiredModules.push(module);
+//                     });
+//                 }
+//             }
+
+//             moduleInfo.setAttribute('requiredModules', JSON.stringify(requiredModules));
+//             blockContainerInfo.appendChild(moduleInfo);
+
+//             // event listener to close module info
+//             moduleInfo.addEventListener('click', (e) => {
+//                 e.stopPropagation();
+//                 blockContainerInfo.classList.add('hidden');
+//                 blockContainer.classList.remove('hidden');
+//             });
+//         });
+//     }
 // }
 
-// if (!customElements.get('leerroute-year')) {
-//     customElements.define('leerroute-year', Year);
-// }
+// window.customElements.define('leerroute-year', Year);
+
+
+
