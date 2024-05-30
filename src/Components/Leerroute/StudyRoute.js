@@ -6,7 +6,7 @@ const template = document.createElement("template");
 template.innerHTML = `
 <input id="studyRouteName" type="text" placeholder="Naam van de studieroute" class="mt-4 p-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
   <select id="studyRoutesDropdown" class="mt-4 p-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-    <option value="">Select a saved study route</option>
+    <option value="">Selecteer een leerroute</option>
   </select>
   <div class="flex flex-col items-center w-full md:flex-row md:justify-center md:flex-wrap" id="school-career"></div>
   <button id="addYearBtn" class="mt-4 rounded-full py-2 px-4 bg-blue-500 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Voeg schooljaar toe</button>
