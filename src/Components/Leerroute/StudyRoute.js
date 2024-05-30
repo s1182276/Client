@@ -114,13 +114,7 @@ class StudyRouteForm extends HTMLElement {
                 studyrouteId: this.currentStudyRouteId || 0 // Use currentStudyRouteId if available, otherwise 0 for new routes
               };
       
-              // If semester already exists, update the map
-              if (existingSemesterMap.has(semesterId)) {
-                existingSemesterMap.set(semesterId, semesterData);
-              } else {
-                // Add new semester to the map
-                existingSemesterMap.set(semesterId, semesterData);
-              }
+              existingSemesterMap.set(semesterId, semesterData);
       
               return semesterData;
             })
