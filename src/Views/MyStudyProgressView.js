@@ -18,7 +18,7 @@ export default (() => {
       <input type="number" id="credits-input" value="${user.ecPoints}" class="block w-full border border-zinc-300 rounded-md py-2 px-3 bg-white text-zinc-900"/>
     </div>
     <div class="mb-4">
-      <label for="has-propedeuse" class="block text-zinc-700 mb-2">Propedeuse behaalt?</label>
+      <label for="has-propedeuse" class="block text-zinc-700 mb-2">Propedeuse behaald?</label>
       <input type="checkbox" id="has-propedeuse" class="block border border-zinc-300 rounded-md py-2 px-3 text-zinc-900"/>
     </div>
     <button id="save-button" class="w-full bg-navyblue text-white py-2 rounded-md">Opslaan</button>
