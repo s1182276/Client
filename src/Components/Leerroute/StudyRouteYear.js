@@ -41,6 +41,9 @@ template.innerHTML = `
       <div class="flex flex-wrap -mx-4 justify-evenly" id="blockContainer">
         <!-- Dynamic blocks will be added here -->
       </div>
+              <div class="flex flex-wrap -mx-4 justify-evenly hidden" id="blockContainerInfo">
+            <!-- Dynamic blocks will be added here -->
+        </div>
     </div>
   </div>
     <link href="dist/css/app.css" type="text/css" rel="stylesheet">
@@ -125,7 +128,7 @@ class LeerrouteYear extends HTMLElement {
         semesterChooser.appendChild(moduleCard);
       }
   
-      async loadModuleInfo(moduleId) {
+     loadModuleInfo(moduleId) {
         window.apiModule.getModuleInfo(moduleId).then(module => {
             const blockContainer = this.shadowRoot.querySelector("#blockContainer");
             const blockContainerInfo = this.shadowRoot.querySelector("#blockContainerInfo");
