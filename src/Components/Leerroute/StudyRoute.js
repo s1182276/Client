@@ -162,7 +162,7 @@ class StudyRouteForm extends HTMLElement {
         const selectedRoute = studyRoutes[index];
         const modules = await ApiService.retrieveModules(token);
 
-        if (selectedRoute && selectedRoute.studyrouteSemesters) {
+        if (selectedRoute?.studyrouteSemesters) {
             this.shadowRoot.getElementById('studyRouteName').value = selectedRoute.name || '';
             this.currentStudyRouteId = selectedRoute.id; // Set the current study route ID for updates
 
