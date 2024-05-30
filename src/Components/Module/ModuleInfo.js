@@ -67,7 +67,6 @@ class ModuleInfo extends HTMLElement {
         const description = this.getAttribute('description');
         const prequired = this.getAttribute('prequired');
         const minimalEC = this.getAttribute('minimalEC');
-        //const level = this.getAttribute('level');
         const schoolYearName = this.getAttribute('schoolYearName');
         const semester = this.getAttribute('semester');
         const requiredModules = JSON.parse(this.getAttribute('requiredModules'));
@@ -76,7 +75,6 @@ class ModuleInfo extends HTMLElement {
         this.shadowRoot.querySelector("#detailDescription").innerHTML = `${description}`;
         this.shadowRoot.querySelector("#detailPreRequired").textContent = `${prequired ? 'Ja' : 'Nee'}`;
         this.shadowRoot.querySelector("#detailMinimalEC").textContent = `${minimalEC}`;
-        //this.shadowRoot.querySelector("#detailLevel").textContent = `${level}`;
         this.shadowRoot.querySelector("#detailSchoolYear").textContent = `${schoolYearName}`;
         this.shadowRoot.querySelector("#detailSemester").textContent = `${semester}`;
 
