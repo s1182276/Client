@@ -102,7 +102,7 @@ class StudyRouteForm extends HTMLElement {
         // Maintain a map of existing semesters to avoid duplication
         const existingSemesterMap = new Map(this.existingSemesters);
       
-        const newSemesters = Array.from(container.querySelectorAll('leerroute-year')).flatMap(year =>
+        Array.from(container.querySelectorAll('leerroute-year')).flatMap(year =>
           Array.from(year.shadowRoot.querySelectorAll('.semester-chooser')).flatMap(semesterChooser =>
             Array.from(semesterChooser.querySelectorAll('module-card')).map(module => {
               const semesterId = parseInt(module.getAttribute('data-semester-id') || 0, 10);
