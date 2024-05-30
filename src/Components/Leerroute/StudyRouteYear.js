@@ -46,7 +46,6 @@ template.innerHTML = `
     <link href="dist/css/app.css" type="text/css" rel="stylesheet">
 `;
 
-
 class LeerrouteYear extends HTMLElement {
     constructor() {
         super();
