@@ -3,24 +3,33 @@
     "version": "1.0.0",
     "license": "MIT",
     "scripts": {
-        "build": "npx tailwindcss -i ./src/Css/main.scss -o ./public/dist/css/app.css && webpack",
-        "dev": "concurrently \"npx tailwindcss -i ./src/Css/main.scss -o ./public/dist/css/app.css --watch\" \"webpack serve\"",
-        "test": "jasmine",
-        "lint": "npx eslint src/App.js"
+        "prebuild": "npx tailwindcss -i ./src/Css/main.scss -o ./public/dist/css/app.css",
+        "build": "npm-run-all prebuild webpack:build",
+        "dev": "npm-run-all prebuild webpack:serve",
+        "webpack:build": "webpack",
+        "webpack:serve": "webpack serve --config webpack.config.js",
+        "test": "jasmine"
+        "lint": "npx eslint src/App.js",
     },
     "main": "public/index.html",
     "devDependencies": {
         "@eslint/js": "^9.3.0",
+        "@babel/core": "^7.24.5",
+        "@babel/preset-env": "^7.24.5",
         "autoprefixer": "^10.4.19",
-        "concurrently": "^8.2.2",
+        "babel-loader": "^9.1.3",
+        "copy-webpack-plugin": "^12.0.2",
         "css-loader": "^7.1.0",
+        "dotenv-webpack": "^8.1.0",
         "eslint": "^9.3.0",
         "globals": "^15.3.0",
         "gulp": "^4.0.2",
         "gulp-jasmine": "^4.0.0",
+        "html-webpack-plugin": "^5.6.0",
         "jasmine": "^3.99.0",
         "jquery": "^3.7.1",
         "mini-css-extract-plugin": "^2.8.1",
+        "npm-run-all": "^4.1.5",
         "postcss": "^8.4.38",
         "postcss-loader": "^8.1.1",
         "postcss-preset-env": "^9.5.4",
@@ -33,6 +42,6 @@
         "webpack-dev-server": "^5.0.4"
     },
     "dependencies": {
-        "dotenv-webpack": "^8.1.0"
+        "@azure/msal-browser": "^3.14.0"
     }
 }
