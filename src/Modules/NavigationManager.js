@@ -1,6 +1,6 @@
 import disclaimerView from "../Views/DisclaimerView";
 import feedbackView from "../Views/FeedbackView";
-import headerView from '../Views/Header'
+import headerView from '../Views/Header';
 import homeView from '../Views/HomeView';
 import myChoicesView from "../Views/MyChoicesView";
 import myStudyProgressView from '../Views/MyStudyProgressView';
@@ -18,12 +18,22 @@ export default (rootId) => {
         "/feedback": feedbackView,
         "/disclaimer": disclaimerView,
         "/leerroute" : newLearningRouteView,
-    }
+    };
 
     async function renderPage() {
-        root.insertAdjacentHTML('afterbegin', headerView.render());
-        root.insertAdjacentHTML('beforeend', '<div id="content" class="container w-full mx-auto py-8 flex flex-col justify-center items-center min-h-1/2 lg:w-10/12">');
-        headerView.afterRender();
+        if (!document.getElementById('header')) {
+            root.insertAdjacentHTML('afterbegin', headerView.render());
+            headerView.afterRender();
+        }
+
+        if (!document.getElementById('menu')) {
+            root.insertAdjacentHTML('afterbegin', '<div id="menu">Menu content here</div>');
+        }
+
+        if (!document.getElementById('content')) {
+            root.insertAdjacentHTML('beforeend', '<div id="content" class="container w-full mx-auto py-8 flex flex-col justify-center items-center min-h-1/2 lg:w-10/12"></div>');
+        }
+
         await renderContent();
     }
 

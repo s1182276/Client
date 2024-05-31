@@ -8,10 +8,12 @@
         "dev": "npm-run-all prebuild webpack:serve",
         "webpack:build": "webpack",
         "webpack:serve": "webpack serve --config webpack.config.js",
-        "test": "jasmine"
+        "test": "jasmine",
+        "lint": "npx eslint src/App.js"
     },
     "main": "public/index.html",
     "devDependencies": {
+        "@eslint/js": "^9.3.0",
         "@babel/core": "^7.24.5",
         "@babel/preset-env": "^7.24.5",
         "autoprefixer": "^10.4.19",
@@ -19,6 +21,8 @@
         "copy-webpack-plugin": "^12.0.2",
         "css-loader": "^7.1.0",
         "dotenv-webpack": "^8.1.0",
+        "eslint": "^9.3.0",
+        "globals": "^15.3.0",
         "gulp": "^4.0.2",
         "gulp-jasmine": "^4.0.0",
         "html-webpack-plugin": "^5.6.0",

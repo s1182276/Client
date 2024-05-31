@@ -1,5 +1,7 @@
-import "../Components/Leerroute/Year"
-import "../Components/Module/ModuleCard"
+//import "../Components/Leerroute/Year"
+import "../Components/Module/ModuleCard";
+import "../Components/Module/ModuleInfo";
+import "../Components/Leerroute/StudyRouteYear";
 
 export default (() => {
     const render = async () => {
