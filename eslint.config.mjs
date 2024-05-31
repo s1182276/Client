@@ -8,16 +8,13 @@ export default [
         ignorePatterns: ["public/**/*", "node_modules/**/*"],
         languageOptions: {
             globals: {
+                ecmaVersion: 5,
+                sourceType: "module",
                 ...globals.browser,
                 ...globals.commonjs,
                 ...globals.es2021,
                 ...globals.jquery,
-                ...globals.node,
-                window: "writable",
-                navigationManager: "writable",
-                api: "writable",
-                ecmaVersion: 5,
-                sourceType: "module"
+                ...globals.node
             }
         },
         rules: {

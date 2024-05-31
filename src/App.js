@@ -1,3 +1,5 @@
+/* globals window */
+
 import navigationManager from './Modules/NavigationManager';
 import apiModule from "./Modules/ApiModule";
 import msalModule from "./Modules/MsalModule";
