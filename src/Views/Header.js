@@ -1,4 +1,7 @@
 import {MenuButton } from "../Classes/MenuButton";
+import { ADMIN_PORTAL_URI } from "../app.config";
+import { AppUserRole } from "../Enums/AppUserRole";
+import { hasFlag } from "../Helpers/FlagHelper";
 
 export default (() => {
     const buttonClasses = [ 'text-white', 'py-2', 'px-4', 'hover:bg-gray-800', 'hover:cursor-pointer', 'cursor-pointer' ];
@@ -9,6 +12,9 @@ export default (() => {
                 redrawMenu();
             });
         }),
+    ];
+
+    const buttonsStudent = [
         new MenuButton("home-button", "Keuzewijzer", () => {
             redirectTo(""); // Home
         }),
@@ -23,7 +29,19 @@ export default (() => {
         }),
     ];
 
-    const buttonsLoggedOut = [
+    const buttonsAdministator = [
+        new MenuButton("admin-button", "Beheer", () => {
+            window.location.href = ADMIN_PORTAL_URI;
+        }),
+    ]
+
+    const buttonsStudentSupervisor = [
+        new MenuButton("my-students-button", "Mijn studenten", () => {
+            // TODO created this button just to test functionality
+        })
+    ]
+
+    const buttonsGuest = [
         new MenuButton("login-button", "Inloggen", () => {
             window.msalModule.signIn().then(() => {
                 redrawMenu();
@@ -44,7 +62,9 @@ export default (() => {
         location.hash = `${location.hash === '#/' && location.hash !== '#/' ? `/${path}` : `#/${path}`}`;
     }
 
-    const redrawMenu = (buttons) => {
+    const redrawMenu = () => {
+        let buttons = [];
+
         let isLoggedIn = window.msalModule.getActiveAccount() != null;
         if(isLoggedIn) {
             window.apiModule.getCurrentUser().then((user) => {
@@ -54,13 +74,33 @@ export default (() => {
                 }
 
                 $('#menu-header').text(user.displayName);
+
+                buttons.push(...buttonsLoggedIn);
+
+                if(hasFlag(user.appUserRole, AppUserRole.Student)){
+                     buttons.push(...buttonsStudent);
+                }
+
+                if(hasFlag(user.appUserRole, AppUserRole.StudentSupervisor)){
+                    buttons.push(...buttonsStudentSupervisor);
+                }
+
+                if(hasFlag(user.appUserRole, AppUserRole.Administrator)){
+                    buttons.push(...buttonsAdministator);
+                }
+
+                drawButtons(buttons);
             });
         }
+        else {
+            buttons.push(...buttonsGuest);
+            buttons.push(...buttonsCommon);
 
-        if(buttons == null) {
-            buttons = (isLoggedIn ? buttonsLoggedIn : buttonsLoggedOut).concat(buttonsCommon);
+            drawButtons(buttons);
         }
+    }
 
+    const drawButtons = (buttons) => {
         $('#menu-buttons').empty();
         buttons.forEach(button => drawButton(button));
     }

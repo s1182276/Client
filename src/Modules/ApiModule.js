@@ -23,7 +23,9 @@ export default () => {
 
     const getCurrentUser = async () => {
         try {
-            return await apiHelper.getAsync("appuser");
+            let currentUser = await apiHelper.getAsync("appuser");
+
+            return currentUser
         } catch (error) {
             console.log(error);
             throw error;
