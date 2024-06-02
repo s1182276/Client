@@ -1,5 +1,7 @@
 import { MenuButton } from "../Classes/MenuButton";
 import authState from '../Services/AuthState';
+import { AppUserRole } from "../Enums/AppUserRole";
+import { hasFlag } from "../Helpers/FlagHelper";
 
 export default (() => {
     const buttonClasses = 'text-white py-2 px-4 hover:bg-gray-800 cursor-pointer';
@@ -10,6 +12,9 @@ export default (() => {
                 authState.checkAuthStatus();
             });
         }),
+    ];
+
+    const buttonsStudent = [
         new MenuButton("home-button", "Keuzewijzer", () => {
             redirectTo(""); // Home
         }),
@@ -24,7 +29,19 @@ export default (() => {
         }),
     ];
 
-    const buttonsLoggedOut = [
+    const buttonsAdministator = [
+        new MenuButton("admin-button", "Beheer", () => {
+            window.location.href = ADMIN_PORTAL_URI;
+        }),
+    ]
+
+    const buttonsStudentSupervisor = [
+        new MenuButton("my-students-button", "Mijn studenten", () => {
+            // TODO created this button just to test functionality
+        })
+    ]
+
+    const buttonsGuest = [
         new MenuButton("login-button", "Inloggen", () => {
             window.msalModule.signIn().then(() => {
                 authState.checkAuthStatus();
@@ -45,23 +62,47 @@ export default (() => {
         location.hash = `#/${path}`;
     }
 
-    const redrawMenu = (buttons) => {
+    const redrawMenu = () => {
+        let buttons = [];
+
         let isLoggedIn = window.msalModule.getActiveAccount() != null;
+        if(isLoggedIn) {
+            window.apiModule.getCurrentUser().then((user) => {
+                if(user.isFirstSignIn){
+                    // Prompt users to fill in their study progress on first sign in
+                    redirectTo("mijn-studievoortgang");
+                }
 
-        const menuHeader = document.getElementById('menu-header');
-        if (isLoggedIn && menuHeader) {
-            menuHeader.textContent = window.msalModule.getActiveAccount().name;
-        }
+                $('#menu-header').text(user.displayName);
 
-        if (!buttons) {
-            buttons = (isLoggedIn ? buttonsLoggedIn : buttonsLoggedOut).concat(buttonsCommon);
-        }
+                buttons.push(...buttonsLoggedIn);
 
-        const menuButtonsContainer = document.getElementById('menu-buttons');
-        if (menuButtonsContainer) {
-            menuButtonsContainer.innerHTML = ''; // Clear existing buttons
-            buttons.forEach(button => drawButton(button, menuButtonsContainer));
+                if(hasFlag(user.appUserRole, AppUserRole.Student)){
+                     buttons.push(...buttonsStudent);
+                }
+
+                if(hasFlag(user.appUserRole, AppUserRole.StudentSupervisor)){
+                    buttons.push(...buttonsStudentSupervisor);
+                }
+
+                if(hasFlag(user.appUserRole, AppUserRole.Administrator)){
+                    buttons.push(...buttonsAdministator);
+                }
+
+                drawButtons(buttons);
+            });
         }
+        else {
+            buttons.push(...buttonsGuest);
+            buttons.push(...buttonsCommon);
+
+            drawButtons(buttons);
+        }
+    }
+
+    const drawButtons = (buttons) => {
+        $('#menu-buttons').empty();
+        buttons.forEach(button => drawButton(button));
     }
 
     const drawButton = (button, container) => {
@@ -81,7 +122,7 @@ export default (() => {
         return `
             <header id="header" class="HomeHeader p-4">
                 <div class="flex justify-between items-center">
-                    <h1 class="text-xl  text-white">Deeltijd Keuzewijzer</h1>
+                    <h1 id="header-text" class="text-xl text-white hover:cursor-pointer">Deeltijd Keuzewijzer</h1>
                     <button id="menuButton" class="text-white focus:outline-none">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -126,6 +167,10 @@ export default (() => {
                 menu.classList.toggle('translate-x-full');
             });
         }
+
+        $('#header-text').on('click', () => {
+            redirectTo("");
+        })
 
         redrawMenu();
     }
