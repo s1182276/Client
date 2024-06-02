@@ -2,6 +2,7 @@ import { MenuButton } from "../Classes/MenuButton";
 import authState from '../Services/AuthState';
 import { AppUserRole } from "../Enums/AppUserRole";
 import { hasFlag } from "../Helpers/FlagHelper";
+import { ADMIN_PORTAL_URI } from "../app.config";
 
 export default (() => {
     const buttonClasses = 'text-white py-2 px-4 hover:bg-gray-800 cursor-pointer';
@@ -31,7 +32,10 @@ export default (() => {
 
     const buttonsAdministator = [
         new MenuButton("admin-button", "Beheer", () => {
-            window.location.href = ADMIN_PORTAL_URI;
+            window.open(
+                ADMIN_PORTAL_URI,
+                '_blank'
+            ); // Open in new tab
         }),
     ]
 
@@ -64,6 +68,7 @@ export default (() => {
 
     const redrawMenu = () => {
         let buttons = [];
+        const menuButtonsContainer = document.getElementById('menu-buttons');
 
         let isLoggedIn = window.msalModule.getActiveAccount() != null;
         if(isLoggedIn) {
@@ -89,20 +94,20 @@ export default (() => {
                     buttons.push(...buttonsAdministator);
                 }
 
-                drawButtons(buttons);
+                drawButtons(buttons, menuButtonsContainer);
             });
         }
         else {
             buttons.push(...buttonsGuest);
             buttons.push(...buttonsCommon);
 
-            drawButtons(buttons);
+            drawButtons(buttons, menuButtonsContainer);
         }
     }
 
-    const drawButtons = (buttons) => {
-        $('#menu-buttons').empty();
-        buttons.forEach(button => drawButton(button));
+    const drawButtons = (buttons, container) => {
+        container.innerHTML = ''; // Clear existing buttons
+        buttons.forEach(button => drawButton(button, container));
     }
 
     const drawButton = (button, container) => {
