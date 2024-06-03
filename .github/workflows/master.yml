@@ -31,6 +31,7 @@ jobs:
         ENV_PORT_SSL: '${{ vars.ENV_PORT_SSL }}'
         API_URL: '${{ vars.API_URL}}'
         AZURE_AD_REDIRECT_URI: '${{ vars.AZURE_AD_REDIRECT_URI }}'
+        ADMIN_PORTAL_URI: '${{ vars.ADMIN_PORTAL_URI }}'
       working-directory: ${{ github.workspace }}
 
   deploy_tst:
@@ -57,6 +58,7 @@ jobs:
         ENV_PORT_SSL: '${{ vars.ENV_PORT_SSL }}'
         API_URL: '${{ vars.API_URL}}'
         AZURE_AD_REDIRECT_URI: '${{ vars.AZURE_AD_REDIRECT_URI }}'
+        ADMIN_PORTAL_URI: '${{ vars.ADMIN_PORTAL_URI }}'
       working-directory: ${{ github.workspace }}
 
   deploy_acc:
@@ -83,6 +85,7 @@ jobs:
         ENV_PORT_SSL: '${{ vars.ENV_PORT_SSL }}'
         API_URL: '${{ vars.API_URL}}'
         AZURE_AD_REDIRECT_URI: '${{ vars.AZURE_AD_REDIRECT_URI }}'
+        ADMIN_PORTAL_URI: '${{ vars.ADMIN_PORTAL_URI }}'
       working-directory: ${{ github.workspace }}      
         
   deploy_prod:
@@ -109,4 +112,5 @@ jobs:
           ENV_PORT_SSL: '${{ vars.ENV_PORT_SSL }}'
           API_URL: '${{ vars.API_URL}}'
           AZURE_AD_REDIRECT_URI: '${{ vars.AZURE_AD_REDIRECT_URI }}'
+          ADMIN_PORTAL_URI: '${{ vars.ADMIN_PORTAL_URI }}'
         working-directory: ${{ github.workspace }}
