@@ -2,14 +2,13 @@ name: Cypress E2E tests
 on:
   workflow_run:
     workflows: ["DTAP Deployment"]
-    branches: [development,staging]
+    branches: [development]
     types:
       - completed
       
 jobs:
   RunE2E:
     runs-on: self-hosted
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
