@@ -15,6 +15,6 @@ jobs:
       run: |
         docker rm --force cypress-test
         docker pull cypress/included:13.9.0
-        docker run --name cypress-test -v ./cypress/e2e:/e2e -v ./cypress.config.js:/cypress.config.js -w /e2e cypress/included:13.9.0
+        docker run --name cypress-test -v ./cypress/e2e:/e2e -v ./cypress.config.js:/e2e/cypress.config.js -w /e2e cypress/included:13.9.0
       env:
         CYPRESS_BASE_URL: '${{ vars.CYPRESS_BASE_URL }}'
