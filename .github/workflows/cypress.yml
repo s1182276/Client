@@ -1,5 +1,9 @@
-on: workflow_dispatch
-
+name: Cypress E2E tests
+on:
+  push:
+    branches:
+      - development
+      
 jobs:
   RunE2E:
     runs-on: self-hosted
@@ -16,4 +20,3 @@ jobs:
         docker run --name cypress-test -v ./cypress/e2e:/e2e -w /e2e cypress/included:13.9.0
       env:
         CYPRESS_BASE_URL: '${{ vars.CYPRESS_BASE_URL }}'
-        CYPRESS_VIDEO: 'false'
