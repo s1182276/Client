@@ -7,5 +7,8 @@ module.exports = defineConfig({
     },
     baseUrl: "https://tst.hbo-ict.dev",
     includeShadowDom: true,
+    screenshotOnRunFailure: false,
+    video: false,
+    supportFiles: false
   },
 });
