@@ -1,12 +1,15 @@
 name: Cypress E2E tests
 on:
-  push:
-    branches:
-      - development
+  workflow_run:
+    workflows: ["DTAP Deployment"]
+    branches: [development,staging]
+    types:
+      - completed
       
 jobs:
   RunE2E:
     runs-on: self-hosted
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -16,6 +19,6 @@ jobs:
         pwd
         ls
         docker pull cypress/included:13.9.0
-        docker run --name cypress-test -v ./cypress/e2e:/e2e -w /e2e cypress/included:13.9.0
+        docker run --name cypress-test -v ./cypress/e2e:/e2e -v ./cypress.config.js:/cypress.config.js -w /e2e cypress/included:13.9.0
       env:
         CYPRESS_BASE_URL: '${{ vars.CYPRESS_BASE_URL }}'
