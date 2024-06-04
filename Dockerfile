@@ -16,6 +16,7 @@ COPY . .
 RUN echo API_URL=$API_URL > .client.env
 RUN echo ENV=$ENV >> .client.env
 RUN echo AZURE_AD_REDIRECT_URI=$AZURE_AD_REDIRECT_URI >> .client.env
+RUN echo ADMIN_PORTAL_URI=$ADMIN_PORTAL_URI >> .client.env
 
 RUN rm -rf ./public
 
