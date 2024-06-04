@@ -1,8 +1,9 @@
 name: Cypress E2E tests
 on:
-  push:
-    branches:
-      - development
+  workflow_run:
+    workflows: [DTAP Deployment]
+    types:
+      - completed
       
 jobs:
   RunE2E:
